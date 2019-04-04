@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Yii\I18N;
+namespace Yii\I18n;
 
 
 interface Resource extends MessageReader, MessageWriter
