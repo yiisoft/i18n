@@ -15,10 +15,8 @@ The package provides internationalization capabilities such as message translati
 
 ## Features
 
-- Message translation.
-- Multiple message storage types.
-- Message formatting. 
-- Multiple formatters.
+- Message translation with pluggable message storages.
+- Message formatting with pluggable formatters.
 
 ## General usage
 
