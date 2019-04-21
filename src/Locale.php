@@ -111,7 +111,7 @@ final class Locale
         }
 
         if (!empty($matches['private'])) {
-            $this->private = $matches['private'];
+            $this->private = preg_replace('~^x-~', '', $matches['private']);
         }
 
         if (!empty($matches['keywords'])) {
@@ -370,7 +370,7 @@ final class Locale
         $region = '(?<region>[A-Za-z]{2}|[0-9]{3})';
         $script = '(?<script>[A-Za-z]{4})';
         $extendedLanguage = '(?<extendedLanguage>[A-Za-z]{3}(?:-[A-Za-z]{3}){0,2})';
-        $language = '(?:(?<language>[A-Za-z]{4,8})|(?<language>[A-Za-z]{2,3})(?:-' . $extendedLanguage . ')?)';
+        $language = '(?<language>[A-Za-z]{4,8})|(?<language>[A-Za-z]{2,3})(?:-' . $extendedLanguage . ')?';
         $icuKeywords = '(?:@(?<keywords>.*?))?';
         $languageTag = '(?:' . $language . '(?:-' . $script . ')?' . '(?:-' . $region . ')?' . '(?:-' . $variant . ')*' . '(?:-' . $extension . ')*' . '(?:-' . $private . ')?' . ')';
         return '/^(?J:' . $grandfathered . '|' . $languageTag . '|' . $private . ')' . $icuKeywords . '$/';
