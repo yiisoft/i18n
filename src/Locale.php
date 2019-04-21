@@ -168,9 +168,9 @@ final class Locale
      */
     public function withScript(?string $script): self
     {
-        $clone = clone $this;
-        $clone->script = $script;
-        return $clone;
+        $new = clone $this;
+        $new->script = $script;
+        return $new;
     }
 
 
@@ -188,9 +188,9 @@ final class Locale
      */
     public function withVariant(?string $variant): self
     {
-        $clone = clone $this;
-        $clone->variant = $variant;
-        return $clone;
+        $new = clone $this;
+        $new->variant = $variant;
+        return $new;
     }
 
     /**
@@ -209,9 +209,9 @@ final class Locale
      */
     public function withLanguage(?string $language): self
     {
-        $clone = clone $this;
-        $clone->language = $language;
-        return $clone;
+        $new = clone $this;
+        $new->language = $language;
+        return $new;
     }
 
     /**
@@ -228,9 +228,9 @@ final class Locale
      */
     public function withCalendar(?string $calendar): self
     {
-        $clone = clone $this;
-        $clone->calendar = $calendar;
-        return $clone;
+        $new = clone $this;
+        $new->calendar = $calendar;
+        return $new;
     }
 
 
@@ -248,9 +248,9 @@ final class Locale
      */
     public function withCollation(?string $collation): self
     {
-        $clone = clone $this;
-        $clone->collation = $collation;
-        return $clone;
+        $new = clone $this;
+        $new->collation = $collation;
+        return $new;
     }
 
     /**
@@ -267,9 +267,9 @@ final class Locale
      */
     public function withNumbers(?string $numbers): self
     {
-        $clone = clone $this;
-        $clone->numbers = $numbers;
-        return $clone;
+        $new = clone $this;
+        $new->numbers = $numbers;
+        return $new;
     }
 
     /**
@@ -288,9 +288,9 @@ final class Locale
      */
     public function withRegion(?string $region): self
     {
-        $clone = clone $this;
-        $clone->region = $region;
-        return $clone;
+        $new = clone $this;
+        $new->region = $region;
+        return $new;
     }
 
     /**
@@ -307,10 +307,10 @@ final class Locale
      */
     public function withCurrency(?string $currency): self
     {
-        $clone = clone $this;
-        $clone->currency = $currency;
+        $new = clone $this;
+        $new->currency = $currency;
 
-        return $clone;
+        return $new;
     }
 
     /**
@@ -327,10 +327,10 @@ final class Locale
      */
     public function withExtendedLanguage(?string $extendedLanguage): self
     {
-        $clone = clone $this;
-        $clone->extendedLanguage = $extendedLanguage;
+        $new = clone $this;
+        $new->extendedLanguage = $extendedLanguage;
 
-        return $clone;
+        return $new;
     }
 
 
@@ -348,10 +348,10 @@ final class Locale
      */
     public function withPrivate(?string $private): self
     {
-        $clone = clone $this;
-        $clone->private = $private;
+        $new = clone $this;
+        $new->private = $private;
 
-        return $clone;
+        return $new;
     }
 
     /**
@@ -416,7 +416,7 @@ final class Locale
         }
 
         if ($this->private !== null) {
-            $result[] = $this->private;
+            $result[] = 'x-' . $this->private;
         }
 
         $keywords = [];
@@ -449,18 +449,26 @@ final class Locale
      */
     public function getFallbackLocale(): self
     {
-        if ($this->variant !== null) {
-            return $this->withVariant(null);
+        $fallback = $this
+            ->withCalendar(null)
+            ->withCollation(null)
+            ->withCurrency(null)
+            ->withExtendedLanguage(null)
+            ->withNumbers(null)
+            ->withPrivate(null);
+
+        if ($fallback->getVariant() !== null) {
+            return $fallback->withVariant(null);
         }
 
-        if ($this->region !== null) {
-            return $this->withRegion(null);
+        if ($fallback->getRegion() !== null) {
+            return $fallback->withRegion(null);
         }
 
-        if ($this->script !== null) {
-            return $this->withScript(null);
+        if ($fallback->getScript() !== null) {
+            return $fallback->withScript(null);
         }
 
-        return $this;
+        return $fallback;
     }
 }
