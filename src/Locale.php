@@ -138,25 +138,10 @@ final class Locale
     }
 
     /**
-     * Returns Locale.
-     * @param Locale|string $locale
-     * @return self
-     * @throws \InvalidArgumentException
-     */
-    public static function create($locale): self
-    {
-        if ($locale instanceof self) {
-            return $locale;
-        }
-
-        return new self((string)$locale);
-    }
-
-    /**
      * @return string Four-letter ISO 15924 script code
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
      */
-    public function getScript(): ?string
+    public function script(): ?string
     {
         return $this->script;
     }
@@ -177,7 +162,7 @@ final class Locale
     /**
      * @return string variant of language conventions to use
      */
-    public function getVariant(): ?string
+    public function variant(): ?string
     {
         return $this->variant;
     }
@@ -197,7 +182,7 @@ final class Locale
      * @return string|null Two-letter ISO-639-2 language code
      * @see http://www.loc.gov/standards/iso639-2/
      */
-    public function getLanguage(): string
+    public function language(): string
     {
         return $this->language;
     }
@@ -217,7 +202,7 @@ final class Locale
     /**
      * @return null|string ICU calendar
      */
-    public function getCalendar(): ?string
+    public function calendar(): ?string
     {
         return $this->calendar;
     }
@@ -237,7 +222,7 @@ final class Locale
     /**
      * @return null|string ICU collation
      */
-    public function getCollation(): ?string
+    public function collation(): ?string
     {
         return $this->collation;
     }
@@ -256,7 +241,7 @@ final class Locale
     /**
      * @return null|string ICU numbers
      */
-    public function getNumbers(): ?string
+    public function numbers(): ?string
     {
         return $this->numbers;
     }
@@ -276,7 +261,7 @@ final class Locale
      * @return string Two-letter ISO 3166-1 country code
      * @see https://www.iso.org/iso-3166-country-codes.html
      */
-    public function getRegion(): ?string
+    public function region(): ?string
     {
         return $this->region;
     }
@@ -296,7 +281,7 @@ final class Locale
     /**
      * @return string ICU currency
      */
-    public function getCurrency(): ?string
+    public function currency(): ?string
     {
         return $this->currency;
     }
@@ -316,7 +301,7 @@ final class Locale
     /**
      * @return null|string extended language subtags
      */
-    public function getExtendedLanguage(): ?string
+    public function extendedLanguage(): ?string
     {
         return $this->extendedLanguage;
     }
@@ -337,7 +322,7 @@ final class Locale
     /**
      * @return null|string
      */
-    public function getPrivate(): ?string
+    public function private(): ?string
     {
         return $this->private;
     }
@@ -447,7 +432,7 @@ final class Locale
      *
      * @return self fallback locale
      */
-    public function getFallbackLocale(): self
+    public function fallbackLocale(): self
     {
         $fallback = $this
             ->withCalendar(null)
@@ -457,15 +442,15 @@ final class Locale
             ->withNumbers(null)
             ->withPrivate(null);
 
-        if ($fallback->getVariant() !== null) {
+        if ($fallback->variant() !== null) {
             return $fallback->withVariant(null);
         }
 
-        if ($fallback->getRegion() !== null) {
+        if ($fallback->region() !== null) {
             return $fallback->withRegion(null);
         }
 
-        if ($fallback->getScript() !== null) {
+        if ($fallback->script() !== null) {
             return $fallback->withScript(null);
         }
 
