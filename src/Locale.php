@@ -1,5 +1,5 @@
 <?php
-namespace Yii\I18n;
+namespace Yiisoft\I18n;
 
 /**
  * Locale stores locale information created from BCP 47 formatted string

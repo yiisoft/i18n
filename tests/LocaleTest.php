@@ -1,7 +1,7 @@
 <?php
 namespace Yii\I18n\Tests;
 
-use Yii\I18n\Locale;
+use Yiisoft\I18n\Locale;
 use PHPUnit\Framework\TestCase;
 
 /**
