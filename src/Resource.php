@@ -1,10 +1,7 @@
 <?php
-
-
 namespace Yiisoft\I18n;
 
-
-interface Resource extends MessageReader, MessageWriter
+interface ResourceInterface extends MessageReaderInterface, MessageWriterInterace
 {
     public function sourceLanguage(): ?string;
     public function targetLanguage(): string;

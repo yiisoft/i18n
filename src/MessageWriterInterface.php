@@ -1,10 +1,7 @@
 <?php
-
-
 namespace Yiisoft\I18n;
 
-
-interface MessageWriter
+interface MessageWriterInterface
 {
     public function write(array $messages): void;
 }

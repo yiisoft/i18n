@@ -1,10 +1,7 @@
 <?php
-
-
 namespace Yiisoft\I18n;
 
-
-interface MessageReader
+interface MessageReaderInterface
 {
     public function all($context = null): array;
     public function one(string $id, $context = null): ?string;
