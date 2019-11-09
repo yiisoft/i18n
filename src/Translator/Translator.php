@@ -4,13 +4,12 @@ namespace Yiisoft\I18n\Translator;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
-use Yiisoft\I18n\TranslationsLoaderInterface;
 use Yiisoft\I18n\TranslatorInterface;
 
 class Translator implements TranslatorInterface
 {
     /**
-     * @var \Yiisoft\I18n\TranslationsLoaderInterface
+     * @var \Yiisoft\I18n\Translator\TranslationsLoaderInterface
      */
     private $translationsLoader;
     /**
