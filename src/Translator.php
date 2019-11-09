@@ -68,7 +68,7 @@ class Translator implements TranslatorInterface
         $key = $language . '/' . $category;
 
         if (!array_key_exists($key, $this->messages)) {
-            $this->messages[$key] = $this->translationsLoader->loadMessages($category, $language);
+            $this->messages[$key] = $this->translationsLoader->load($category, $language);
         }
 
         return $this->messages[$key];
