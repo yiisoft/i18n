@@ -2,7 +2,7 @@
 namespace Yii\I18n\Resource;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use yii\i18n\event\OnMissingTranslation;
+use Yiisoft\I18n\Event\OnMissingTranslation;
 
 /**
  * MessageSource is the base class for message translation repository classes.
@@ -111,11 +111,9 @@ abstract class MessageSource
         $missingTranslation = new OnMissingTranslation($category, $language, $message);
         $this->eventDispatcher->dispatch($missingTranslation);
 
-
         if ($missingTranslation->hasFallback()) {
             return $messages[$message] = $missingTranslation->fallback();
         }
-
 
         return $messages[$message] = null;
     }
