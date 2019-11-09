@@ -6,6 +6,9 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
 use Yiisoft\I18n\TranslatorInterface;
 
+/**
+ * TODO may be it must be taken out from yiisoft/i18n?
+ */
 class Translator implements TranslatorInterface
 {
     /**
