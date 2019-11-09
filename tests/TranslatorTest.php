@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
 use Yiisoft\I18n\TranslationsLoaderInterface;
-use Yiisoft\I18n\Translator;
+use Yiisoft\I18n\Translator\Translator;
 use Yiisoft\I18n\TranslatorInterface;
 
 class TranslatorTest extends TestCase
