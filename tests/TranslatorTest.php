@@ -7,7 +7,6 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
 use Yiisoft\I18n\Translator\TranslationsLoaderInterface;
 use Yiisoft\I18n\Translator\Translator;
-use Yiisoft\I18n\TranslatorInterface;
 
 class TranslatorTest extends TestCase
 {
@@ -61,11 +60,6 @@ class TranslatorTest extends TestCase
             ->with(new MissingTranslationEvent($category, $language, $message));
 
         $translator->translate($message, $category, $language);
-    }
-
-    private function getTranslator(): TranslatorInterface
-    {
-        return $this->createMock(Translator::class);
     }
 
     public function getTranslations(): array
