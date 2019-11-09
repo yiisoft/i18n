@@ -2,7 +2,6 @@
 namespace Yii\I18n\Resource;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use yii\base\Component;
 use yii\i18n\event\OnMissingTranslation;
 
 /**
@@ -15,7 +14,7 @@ use yii\i18n\event\OnMissingTranslation;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-abstract class MessageSource extends Component
+abstract class MessageSource
 {
     private $eventDispatcher;
 
