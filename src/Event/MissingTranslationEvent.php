@@ -2,17 +2,19 @@
 
 namespace Yiisoft\I18n\Event;
 
-class OnMissingTranslation
+class MissingTranslationEvent
 {
     public function __construct(string $category, string $language, string $message)
     {
     }
 
-    public function fallback(): array
+    public function fallback(): ?string
     {
+        return null;
     }
 
     public function hasFallback(): bool
     {
+        return true;
     }
 }
