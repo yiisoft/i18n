@@ -4,6 +4,7 @@ namespace Yiisoft\I18n\Translator;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
+use Yiisoft\I18n\Locale;
 use Yiisoft\I18n\MessageReaderInterface;
 use Yiisoft\I18n\TranslatorInterface;
 
@@ -34,35 +35,39 @@ class Translator implements TranslatorInterface
     /**
      * Translates a message to the specified language.
      * If a translation is not found, a {{@see \Yiisoft\I18n\Event\MissingTranslationEvent} event will be triggered.
+     *
      * @param string $message the message to be translated
      * @param string $category the message category
-     * @param string $locale the target locale
+     * @param string $localeString the target locale
      * @return string|null the translated message or false if translation wasn't found or isn't required
      */
-    public function translate(?string $message, string $category = null, string $locale = null): ?string
+    public function translate(?string $message, string $category = null, string $localeString = null): ?string
     {
-        if ($locale === null) {
-            $locale = $this->getDefaultLocale();
+        if ($localeString === null) {
+            $localeString = $this->getDefaultLocale();
         }
 
         if ($category === null) {
             $category = $this->getDefaultCategory();
         }
 
-        $messages = $this->getMessages($category, $locale);
+        $messages = $this->getMessages($category, $localeString);
 
         if (array_key_exists($message, $messages)) {
             return $messages[$message];
         }
 
-        $missingTranslation = new MissingTranslationEvent($category, $locale, $message);
+        $missingTranslation = new MissingTranslationEvent($category, $localeString, $message);
         $this->eventDispatcher->dispatch($missingTranslation);
 
-        if ($missingTranslation->hasFallback()) {
-            return $messages[$message] = $missingTranslation->fallback();
+        $locale = new Locale($localeString);
+        $fallback = $locale->fallbackLocale();
+
+        if ($fallback->asString() !== $locale->asString()) {
+            return $messages[$message] = $this->translate($message, $category, $fallback->asString());
         }
 
-        return $messages[$message] = null;
+        return $messages[$message] = $message;
     }
 
     private function getMessages(string $category, string $language): array
