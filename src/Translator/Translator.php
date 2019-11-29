@@ -4,14 +4,15 @@ namespace Yiisoft\I18n\Translator;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
+use Yiisoft\I18n\MessageReaderInterface;
 use Yiisoft\I18n\TranslatorInterface;
 
 class Translator implements TranslatorInterface
 {
     /**
-     * @var \Yiisoft\I18n\Translator\TranslationsLoaderInterface
+     * @var \Yiisoft\I18n\MessageReaderInterface
      */
-    private $translationsLoader;
+    private $messageReader;
     /**
      * @var \Psr\EventDispatcher\EventDispatcherInterface
      */
@@ -24,9 +25,9 @@ class Translator implements TranslatorInterface
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        TranslationsLoaderInterface $translationsLoader
+        MessageReaderInterface $messageReader
     ) {
-        $this->translationsLoader = $translationsLoader;
+        $this->messageReader = $messageReader;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -69,7 +70,7 @@ class Translator implements TranslatorInterface
         $key = $language . '/' . $category;
 
         if (!array_key_exists($key, $this->messages)) {
-            $this->messages[$key] = $this->translationsLoader->load($category, $language);
+            $this->messages[$key] = $this->messageReader->all($key);
         }
 
         return $this->messages[$key];
