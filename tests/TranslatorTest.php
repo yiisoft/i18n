@@ -5,7 +5,7 @@ namespace Yii\I18n\Tests;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
-use Yiisoft\I18n\Translator\TranslationsLoaderInterface;
+use Yiisoft\I18n\MessageReaderInterface;
 use Yiisoft\I18n\Translator\Translator;
 
 class TranslatorTest extends TestCase
@@ -17,20 +17,19 @@ class TranslatorTest extends TestCase
      */
     public function testTranslation($message, $translate)
     {
-        $translationsLoader = $this->getMockBuilder(TranslationsLoaderInterface::class)
-            ->setMethods(['load'])
+        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
             ->getMock();
 
         $translator = $this->getMockBuilder(Translator::class)
             ->setConstructorArgs([
                 $this->createMock(EventDispatcherInterface::class),
-                $translationsLoader,
+                $messageReader,
             ])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $translationsLoader->expects($this->once())
-            ->method('load')
+        $messageReader->expects($this->once())
+            ->method('all')
             ->willReturn([$message => $translate]);
 
         $this->assertEquals($translate, $translator->translate($message));
@@ -49,7 +48,7 @@ class TranslatorTest extends TestCase
         $translator = $this->getMockBuilder(Translator::class)
             ->setConstructorArgs([
                 $eventDispatcher,
-                $this->createMock(TranslationsLoaderInterface::class),
+                $this->createMock(MessageReaderInterface::class),
             ])
             ->enableProxyingToOriginalMethods()
             ->getMock();
