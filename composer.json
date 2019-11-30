@@ -2,7 +2,12 @@
     "name": "yiisoft/i18n",
     "type": "library",
     "description": "Yii i18n",
-    "keywords": ["i18n", "translation", "internationalization", "formatting"],
+    "keywords": [
+        "i18n",
+        "translation",
+        "internationalization",
+        "formatting"
+    ],
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
@@ -32,5 +37,8 @@
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
