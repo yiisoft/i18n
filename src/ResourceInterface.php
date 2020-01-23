@@ -1,4 +1,5 @@
 <?php
+
 namespace Yiisoft\I18n;
 
 interface ResourceInterface extends MessageReaderInterface, MessageWriterInterface

@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii\I18n\Tests;
 
 use Yiisoft\I18n\Locale;
