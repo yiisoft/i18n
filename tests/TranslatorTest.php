@@ -57,6 +57,37 @@ class TranslatorTest extends TestCase
         $this->assertEquals($expected, $translator->translate($message, $parameters, $category));
     }
 
+    public function testFallbackLocale()
+    {
+        $category = 'test';
+        $message = 'test';
+        $fallbackMessage = 'test de locale';
+
+        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
+            ->getMock();
+
+        /**
+         * @var $translator Translator
+         */
+        $translator = $this->getMockBuilder(Translator::class)
+            ->setConstructorArgs(
+                [
+                    $this->createMock(EventDispatcherInterface::class),
+                    $messageReader,
+                ]
+            )
+            ->enableProxyingToOriginalMethods()
+            ->getMock();
+
+        $translator->setDefaultLocale('de');
+
+        $messageReader
+            ->method('all')
+            ->will($this->onConsecutiveCalls([], ['test' => $fallbackMessage]));
+
+        $this->assertEquals($fallbackMessage, $translator->translate($message, [], $category, 'en'));
+    }
+
     public function testMissingEventTriggered()
     {
         $category = 'test';
@@ -80,8 +111,10 @@ class TranslatorTest extends TestCase
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
+        $translator->setDefaultLocale('de');
+
         $eventDispatcher
-            ->expects($this->once())
+            ->expects($this->at(0))
             ->method('dispatch')
             ->with(new MissingTranslationEvent($category, $language, $message));
 

@@ -17,6 +17,8 @@ class Translator implements TranslatorInterface
     private MessageReaderInterface $messageReader;
     private ?MessageFormatterInterface $messageFormatter;
     private array $messages = [];
+    private ?string $locale = null;
+    private ?string $defaultLocale = null;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -29,6 +31,34 @@ class Translator implements TranslatorInterface
     }
 
     /**
+     * Sets the current locale.
+     *
+     * @param string $locale The locale
+     */
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * Returns the current locale.
+     *
+     * @return string The locale
+     */
+    public function getLocale(): string
+    {
+        return $this->locale ?? $this->getDefaultLocale();
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setDefaultLocale(string $locale): void
+    {
+        $this->defaultLocale = $locale;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function translate(
@@ -38,7 +68,7 @@ class Translator implements TranslatorInterface
         string $localeString = null
     ): ?string {
         if ($localeString === null) {
-            $localeString = $this->getDefaultLocale();
+            $localeString = $this->getLocale();
         }
 
         if ($category === null) {
@@ -58,6 +88,12 @@ class Translator implements TranslatorInterface
                 return $this->translate($message, $parameters, $category, $fallback->asString());
             }
 
+            $defaultFallback = (new Locale($this->getDefaultLocale()))->fallbackLocale();
+
+            if ($defaultFallback->asString() !== $fallback->asString()) {
+                return $this->translate($message, $parameters, $category, $this->getDefaultLocale());
+            }
+
             $messages[$message] = $message;
         }
 
@@ -65,7 +101,7 @@ class Translator implements TranslatorInterface
             return $messages[$message];
         }
 
-        return $this->messageFormatter->format($message, $parameters, $localeString);
+        return $this->messageFormatter->format($messages[$message], $parameters, $localeString);
     }
 
     private function getMessages(string $category, string $language): array
@@ -86,6 +122,6 @@ class Translator implements TranslatorInterface
 
     protected function getDefaultLocale(): string
     {
-        return \Locale::getDefault();
+        return $this->defaultLocale ?? \Locale::getDefault();
     }
 }
