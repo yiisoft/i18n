@@ -3,6 +3,7 @@
 namespace Yii\I18n\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\I18n\MessageFormatterInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
 use Yiisoft\I18n\MessageReaderInterface;
@@ -14,17 +15,32 @@ class TranslatorTest extends TestCase
      * @dataProvider getTranslations
      * @param $message
      * @param $translate
+     * @param $expected
+     * @param $parameters
+     * @param $category
      */
-    public function testTranslation($message, $translate)
+    public function testTranslation($message, $translate, $expected, $parameters, $category)
     {
         $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
             ->getMock();
 
+        $messageFormatter = null;
+        if ([] !== $parameters) {
+            $messageFormatter = $this->getMockBuilder(MessageFormatterInterface::class)
+                ->getMock();
+        }
+
+        /**
+         * @var $translator Translator
+         */
         $translator = $this->getMockBuilder(Translator::class)
-            ->setConstructorArgs([
-                $this->createMock(EventDispatcherInterface::class),
-                $messageReader,
-            ])
+            ->setConstructorArgs(
+                [
+                    $this->createMock(EventDispatcherInterface::class),
+                    $messageReader,
+                    $messageFormatter
+                ]
+            )
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -32,7 +48,13 @@ class TranslatorTest extends TestCase
             ->method('all')
             ->willReturn([$message => $translate]);
 
-        $this->assertEquals($translate, $translator->translate($message));
+        if ($messageFormatter instanceof MessageFormatterInterface) {
+            $messageFormatter->expects($this->once())
+                ->method('format')
+                ->willReturn($this->formatMessage($translate, $parameters));
+        }
+
+        $this->assertEquals($expected, $translator->translate($message, $parameters, $category));
     }
 
     public function testMissingEventTriggered()
@@ -45,11 +67,16 @@ class TranslatorTest extends TestCase
             ->setMethods(['dispatch'])
             ->getMock();
 
+        /**
+         * @var $translator Translator
+         */
         $translator = $this->getMockBuilder(Translator::class)
-            ->setConstructorArgs([
-                $eventDispatcher,
-                $this->createMock(MessageReaderInterface::class),
-            ])
+            ->setConstructorArgs(
+                [
+                    $eventDispatcher,
+                    $this->createMock(MessageReaderInterface::class),
+                ]
+            )
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -58,15 +85,24 @@ class TranslatorTest extends TestCase
             ->method('dispatch')
             ->with(new MissingTranslationEvent($category, $language, $message));
 
-        $translator->translate($message, $category, $language);
+        $translator->translate($message, [], $category, $language);
     }
 
     public function getTranslations(): array
     {
         return [
-            [null, null],
-            [1, 1],
-            ['test', 'test'],
+            [null, null, null, [], null],
+            ['test', 'test', 'test', [], null],
+            ['test {param}', 'translated {param}', 'translated param-value', ['param' => 'param-value'], null],
         ];
+    }
+
+    private function formatMessage(string $message, array $parameters): string
+    {
+        foreach ($parameters as $key => $value) {
+            $message = str_replace('{' . $key . '}', $value, $message);
+        }
+
+        return $message;
     }
 }

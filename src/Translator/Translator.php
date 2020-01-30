@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\I18n\Translator;
 
+use Yiisoft\I18n\MessageFormatterInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
 use Yiisoft\I18n\Locale;
@@ -10,39 +13,30 @@ use Yiisoft\I18n\TranslatorInterface;
 
 class Translator implements TranslatorInterface
 {
-    /**
-     * @var \Yiisoft\I18n\MessageReaderInterface
-     */
-    private $messageReader;
-    /**
-     * @var \Psr\EventDispatcher\EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var array
-     */
-    private $messages = [];
+    private EventDispatcherInterface $eventDispatcher;
+    private MessageReaderInterface $messageReader;
+    private ?MessageFormatterInterface $messageFormatter;
+    private array $messages = [];
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        MessageReaderInterface $messageReader
+        MessageReaderInterface $messageReader,
+        MessageFormatterInterface $messageFormatter = null
     ) {
         $this->messageReader = $messageReader;
         $this->eventDispatcher = $eventDispatcher;
+        $this->messageFormatter = $messageFormatter;
     }
 
     /**
-     * Translates a message to the specified language.
-     * If a translation is not found, a {{@see \Yiisoft\I18n\Event\MissingTranslationEvent} event will be triggered.
-     *
-     * @param string $message the message to be translated
-     * @param string $category the message category
-     * @param string $localeString the target locale
-     * @return string|null the translated message or false if translation wasn't found or isn't required
+     * {@inheritdoc}
      */
-    public function translate(?string $message, string $category = null, string $localeString = null): ?string
-    {
+    public function translate(
+        ?string $message,
+        array $parameters = [],
+        string $category = null,
+        string $localeString = null
+    ): ?string {
         if ($localeString === null) {
             $localeString = $this->getDefaultLocale();
         }
@@ -53,21 +47,25 @@ class Translator implements TranslatorInterface
 
         $messages = $this->getMessages($category, $localeString);
 
-        if (array_key_exists($message, $messages)) {
+        if (!array_key_exists($message, $messages)) {
+            $missingTranslation = new MissingTranslationEvent($category, $localeString, $message);
+            $this->eventDispatcher->dispatch($missingTranslation);
+
+            $locale = new Locale($localeString);
+            $fallback = $locale->fallbackLocale();
+
+            if ($fallback->asString() !== $locale->asString()) {
+                return $this->translate($message, $parameters, $category, $fallback->asString());
+            }
+
+            $messages[$message] = $message;
+        }
+
+        if ($this->messageFormatter === null) {
             return $messages[$message];
         }
 
-        $missingTranslation = new MissingTranslationEvent($category, $localeString, $message);
-        $this->eventDispatcher->dispatch($missingTranslation);
-
-        $locale = new Locale($localeString);
-        $fallback = $locale->fallbackLocale();
-
-        if ($fallback->asString() !== $locale->asString()) {
-            return $messages[$message] = $this->translate($message, $category, $fallback->asString());
-        }
-
-        return $messages[$message] = $message;
+        return $this->messageFormatter->format($message, $parameters, $localeString);
     }
 
     private function getMessages(string $category, string $language): array
