@@ -9,17 +9,17 @@ use Yiisoft\I18n\Event\MissingTranslationEvent;
 use Yiisoft\I18n\MessageReaderInterface;
 use Yiisoft\I18n\Translator\Translator;
 
-class TranslatorTest extends TestCase
+final class TranslatorTest extends TestCase
 {
     /**
      * @dataProvider getTranslations
-     * @param $message
-     * @param $translate
-     * @param $expected
-     * @param $parameters
-     * @param $category
+     * @param string|null $message
+     * @param string|null $translate
+     * @param string|null $expected
+     * @param array $parameters
+     * @param string|null $category
      */
-    public function testTranslation($message, $translate, $expected, $parameters, $category)
+    public function testTranslation(?string $message, ?string $translate, ?string $expected, array $parameters, ?string $category): void
     {
         $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
             ->getMock();
@@ -57,7 +57,7 @@ class TranslatorTest extends TestCase
         $this->assertEquals($expected, $translator->translate($message, $parameters, $category));
     }
 
-    public function testFallbackLocale()
+    public function testFallbackLocale(): void
     {
         $category = 'test';
         $message = 'test';
@@ -88,7 +88,7 @@ class TranslatorTest extends TestCase
         $this->assertEquals($fallbackMessage, $translator->translate($message, [], $category, 'en'));
     }
 
-    public function testMissingEventTriggered()
+    public function testMissingEventTriggered(): void
     {
         $category = 'test';
         $language = 'en';
