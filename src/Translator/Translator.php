@@ -16,7 +16,6 @@ class Translator implements TranslatorInterface
     private EventDispatcherInterface $eventDispatcher;
     private MessageReaderInterface $messageReader;
     private ?MessageFormatterInterface $messageFormatter;
-    private array $messages = [];
     private ?string $locale = null;
     private ?string $defaultLocale = null;
 
@@ -50,9 +49,6 @@ class Translator implements TranslatorInterface
         return $this->locale ?? $this->getDefaultLocale();
     }
 
-    /**
-     * @param string $locale
-     */
     public function setDefaultLocale(string $locale): void
     {
         $this->defaultLocale = $locale;
@@ -62,7 +58,7 @@ class Translator implements TranslatorInterface
      * {@inheritdoc}
      */
     public function translate(
-        ?string $message,
+        string $id,
         array $parameters = [],
         string $category = null,
         string $localeString = null
@@ -75,44 +71,32 @@ class Translator implements TranslatorInterface
             $category = $this->getDefaultCategory();
         }
 
-        $messages = $this->getMessages($category, $localeString);
-
-        if (!array_key_exists($message, $messages)) {
-            $missingTranslation = new MissingTranslationEvent($category, $localeString, $message);
+        $message = $this->messageReader->one($id, $localeString . '/' . $category);
+        if ($message === null) {
+            $missingTranslation = new MissingTranslationEvent($category, $localeString, $id);
             $this->eventDispatcher->dispatch($missingTranslation);
 
             $locale = new Locale($localeString);
             $fallback = $locale->fallbackLocale();
 
             if ($fallback->asString() !== $locale->asString()) {
-                return $this->translate($message, $parameters, $category, $fallback->asString());
+                return $this->translate($id, $parameters, $category, $fallback->asString());
             }
 
             $defaultFallback = (new Locale($this->getDefaultLocale()))->fallbackLocale();
 
             if ($defaultFallback->asString() !== $fallback->asString()) {
-                return $this->translate($message, $parameters, $category, $this->getDefaultLocale());
+                return $this->translate($id, $parameters, $category, $this->getDefaultLocale());
             }
 
-            $messages[$message] = $message;
+            $message = $id;
         }
 
         if ($this->messageFormatter === null) {
-            return $messages[$message];
+            return $message;
         }
 
-        return $this->messageFormatter->format($messages[$message], $parameters, $localeString);
-    }
-
-    private function getMessages(string $category, string $language): array
-    {
-        $key = $language . '/' . $category;
-
-        if (!array_key_exists($key, $this->messages)) {
-            $this->messages[$key] = $this->messageReader->all($key);
-        }
-
-        return $this->messages[$key];
+        return $this->messageFormatter->format($message, $parameters, $localeString);
     }
 
     protected function getDefaultCategory(): string

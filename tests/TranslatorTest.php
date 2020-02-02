@@ -2,7 +2,6 @@
 
 namespace Yii\I18n\Tests;
 
-use Phan\Plugin\PrintfCheckerPlugin\PrimitiveValue;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
@@ -14,20 +13,20 @@ final class TranslatorTest extends TestCase
 {
     /**
      * @dataProvider getTranslations
-     * @param string|null $message
+     * @param string|null $id
      * @param string|null $translation
      * @param string|null $expected
      * @param array $parameters
      * @param string|null $category
      */
     public function testTranslation(
-        ?string $message,
+        ?string $id,
         ?string $translation,
         ?string $expected,
         array $parameters,
         ?string $category
     ): void {
-        $messageReader = $this->createMessageReader([$message => $translation]);
+        $messageReader = $this->createMessageReader([$id => $translation]);
 
         $messageFormatter = null;
         if ([] !== $parameters) {
@@ -51,7 +50,7 @@ final class TranslatorTest extends TestCase
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $this->assertEquals($expected, $translator->translate($message, $parameters, $category));
+        $this->assertEquals($expected, $translator->translate($id, $parameters, $category));
     }
 
     public function testFallbackLocale(): void
@@ -117,7 +116,6 @@ final class TranslatorTest extends TestCase
     public function getTranslations(): array
     {
         return [
-            [null, null, null, [], null],
             ['test', 'test', 'test', [], null],
             ['test {param}', 'translated {param}', 'translated param-value', ['param' => 'param-value'], null],
         ];
