@@ -2,10 +2,11 @@
 
 namespace Yii\I18n\Tests;
 
+use Phan\Plugin\PrintfCheckerPlugin\PrimitiveValue;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\I18n\MessageFormatterInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\I18n\Event\MissingTranslationEvent;
+use Yiisoft\I18n\MessageFormatterInterface;
 use Yiisoft\I18n\MessageReaderInterface;
 use Yiisoft\I18n\Translator\Translator;
 
@@ -19,12 +20,14 @@ final class TranslatorTest extends TestCase
      * @param array $parameters
      * @param string|null $category
      */
-    public function testTranslation(?string $message, ?string $translation, ?string $expected, array $parameters, ?string $category): void
-    {
-        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)->getMock();
-        $messageReader
-            ->method('all')
-            ->willReturn([$message => $translation]);
+    public function testTranslation(
+        ?string $message,
+        ?string $translation,
+        ?string $expected,
+        array $parameters,
+        ?string $category
+    ): void {
+        $messageReader = $this->createMessageReader([$message => $translation]);
 
         $messageFormatter = null;
         if ([] !== $parameters) {
@@ -57,10 +60,7 @@ final class TranslatorTest extends TestCase
         $message = 'test';
         $fallbackMessage = 'test de locale';
 
-        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)->getMock();
-        $messageReader
-            ->method('all')
-            ->will($this->onConsecutiveCalls([], ['test' => $fallbackMessage]));
+        $messageReader = $this->createMessageReader(['test' => $fallbackMessage]);
 
         /**
          * @var $translator Translator
@@ -76,7 +76,6 @@ final class TranslatorTest extends TestCase
             ->getMock();
 
         $translator->setDefaultLocale('de');
-
 
 
         $this->assertEquals($fallbackMessage, $translator->translate($message, [], $category, 'en'));
@@ -99,7 +98,7 @@ final class TranslatorTest extends TestCase
             ->setConstructorArgs(
                 [
                     $eventDispatcher,
-                    $this->createMock(MessageReaderInterface::class),
+                    $this->createMessageReader([]),
                 ]
             )
             ->enableProxyingToOriginalMethods()
@@ -131,5 +130,32 @@ final class TranslatorTest extends TestCase
         }
 
         return $message;
+    }
+
+    private function createMessageReader(array $messages): MessageReaderInterface
+    {
+        return new class ($messages) implements MessageReaderInterface {
+            private array $messages;
+
+            public function __construct(array $messages)
+            {
+                $this->messages = $messages;
+            }
+
+            public function all($context = null): array
+            {
+                return $this->messages;
+            }
+
+            public function one(string $id, $context = null): ?string
+            {
+                return $this->messages[$id] ?? null;
+            }
+
+            public function plural(string $id, int $count, $context = null): ?string
+            {
+                return $this->messages[$id] ?? null;
+            }
+        };
     }
 }
