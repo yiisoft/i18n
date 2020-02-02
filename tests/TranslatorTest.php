@@ -14,12 +14,12 @@ final class TranslatorTest extends TestCase
     /**
      * @dataProvider getTranslations
      * @param string|null $message
-     * @param string|null $translate
+     * @param string|null $translation
      * @param string|null $expected
      * @param array $parameters
      * @param string|null $category
      */
-    public function testTranslation(?string $message, ?string $translate, ?string $expected, array $parameters, ?string $category): void
+    public function testTranslation(?string $message, ?string $translation, ?string $expected, array $parameters, ?string $category): void
     {
         $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
             ->getMock();
@@ -46,12 +46,12 @@ final class TranslatorTest extends TestCase
 
         $messageReader->expects($this->once())
             ->method('all')
-            ->willReturn([$message => $translate]);
+            ->willReturn([$message => $translation]);
 
         if ($messageFormatter instanceof MessageFormatterInterface) {
             $messageFormatter->expects($this->once())
                 ->method('format')
-                ->willReturn($this->formatMessage($translate, $parameters));
+                ->willReturn($this->formatMessage($translation, $parameters));
         }
 
         $this->assertEquals($expected, $translator->translate($message, $parameters, $category));
