@@ -54,9 +54,6 @@ class Translator implements TranslatorInterface
         $this->defaultLocale = $locale;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function translate(
         string $id,
         array $parameters = [],
