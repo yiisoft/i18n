@@ -21,13 +21,17 @@ final class TranslatorTest extends TestCase
      */
     public function testTranslation(?string $message, ?string $translation, ?string $expected, array $parameters, ?string $category): void
     {
-        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
-            ->getMock();
+        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)->getMock();
+        $messageReader
+            ->method('all')
+            ->willReturn([$message => $translation]);
 
         $messageFormatter = null;
         if ([] !== $parameters) {
-            $messageFormatter = $this->getMockBuilder(MessageFormatterInterface::class)
-                ->getMock();
+            $messageFormatter = $this->getMockBuilder(MessageFormatterInterface::class)->getMock();
+            $messageFormatter
+                ->method('format')
+                ->willReturn($this->formatMessage($translation, $parameters));
         }
 
         /**
@@ -44,16 +48,6 @@ final class TranslatorTest extends TestCase
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $messageReader->expects($this->once())
-            ->method('all')
-            ->willReturn([$message => $translation]);
-
-        if ($messageFormatter instanceof MessageFormatterInterface) {
-            $messageFormatter->expects($this->once())
-                ->method('format')
-                ->willReturn($this->formatMessage($translation, $parameters));
-        }
-
         $this->assertEquals($expected, $translator->translate($message, $parameters, $category));
     }
 
@@ -63,8 +57,10 @@ final class TranslatorTest extends TestCase
         $message = 'test';
         $fallbackMessage = 'test de locale';
 
-        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)
-            ->getMock();
+        $messageReader = $this->getMockBuilder(MessageReaderInterface::class)->getMock();
+        $messageReader
+            ->method('all')
+            ->will($this->onConsecutiveCalls([], ['test' => $fallbackMessage]));
 
         /**
          * @var $translator Translator
@@ -81,9 +77,7 @@ final class TranslatorTest extends TestCase
 
         $translator->setDefaultLocale('de');
 
-        $messageReader
-            ->method('all')
-            ->will($this->onConsecutiveCalls([], ['test' => $fallbackMessage]));
+
 
         $this->assertEquals($fallbackMessage, $translator->translate($message, [], $category, 'en'));
     }
