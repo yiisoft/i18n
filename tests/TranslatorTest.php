@@ -132,7 +132,7 @@ final class TranslatorTest extends TestCase
 
     private function createMessageReader(array $messages): MessageReaderInterface
     {
-        return new class ($messages) implements MessageReaderInterface {
+        return new class($messages) implements MessageReaderInterface {
             private array $messages;
 
             public function __construct(array $messages)
