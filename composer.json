@@ -19,7 +19,6 @@
     },
     "require": {
         "php": "^7.4",
-        "psr/event-dispatcher": "1.0.0",
         "ext-intl": "*"
     },
     "require-dev": {

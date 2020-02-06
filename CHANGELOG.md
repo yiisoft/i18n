@@ -1,4 +1,4 @@
-# Yii i18n Change Log
+# Yii I18n Change Log
 
 ## 1.0.0 under development
 
