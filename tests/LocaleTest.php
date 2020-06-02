@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yii\I18n\Tests;
 
 use Yiisoft\I18n\Locale;
