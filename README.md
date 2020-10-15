@@ -1,3 +1,5 @@
+> This package was deprecated in favor of [yiisoft/translator](https://github.com/yiisoft/translator).
+
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
