@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yii\I18n\Tests;
 
-use Yiisoft\I18n\Locale;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\I18n\Locale;
 
 /**
  * @group i18n

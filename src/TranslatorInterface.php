@@ -13,6 +13,7 @@ interface TranslatorInterface
      * @param array  $parameters An array of parameters for the message
      * @param string $category the message category
      * @param string $locale the target locale
+     *
      * @return string|null the translated message or false if translation wasn't found or isn't required
      */
     public function translate(

@@ -12,6 +12,7 @@ final class Locale
 {
     /**
      * @var string|null Two-letter ISO-639-2 language code
+     *
      * @see http://www.loc.gov/standards/iso639-2/
      */
     private $language;
@@ -28,12 +29,14 @@ final class Locale
 
     /**
      * @var string|null Four-letter ISO 15924 script code
+     *
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
      */
     private $script;
 
     /**
      * @var string|null Two-letter ISO 3166-1 country code
+     *
      * @see https://www.iso.org/iso-3166-country-codes.html
      */
     private $region;
@@ -75,13 +78,16 @@ final class Locale
 
     /**
      * Locale constructor.
+     *
      * @param string $localeString BCP 47 formatted locale string
+     *
      * @see https://tools.ietf.org/html/bcp47
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $localeString)
     {
-        if (!preg_match(static::getBCP47Regex(), $localeString, $matches)) {
+        if (!preg_match(self::getBCP47Regex(), $localeString, $matches)) {
             throw new \InvalidArgumentException($localeString . ' is not valid BCP 47 formatted locale string');
         }
 
@@ -142,6 +148,7 @@ final class Locale
 
     /**
      * @return string Four-letter ISO 15924 script code
+     *
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
      */
     public function script(): ?string
@@ -150,8 +157,10 @@ final class Locale
     }
 
     /**
-     * @param null|string $script Four-letter ISO 15924 script code
+     * @param string|null $script Four-letter ISO 15924 script code
+     *
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
+     *
      * @return self
      */
     public function withScript(?string $script): self
@@ -160,7 +169,6 @@ final class Locale
         $new->script = $script;
         return $new;
     }
-
 
     /**
      * @return string variant of language conventions to use
@@ -171,7 +179,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $variant variant of language conventions to use
+     * @param string|null $variant variant of language conventions to use
+     *
      * @return self
      */
     public function withVariant(?string $variant): self
@@ -183,6 +192,7 @@ final class Locale
 
     /**
      * @return string|null Two-letter ISO-639-2 language code
+     *
      * @see http://www.loc.gov/standards/iso639-2/
      */
     public function language(): string
@@ -191,8 +201,10 @@ final class Locale
     }
 
     /**
-     * @param null|string $language Two-letter ISO-639-2 language code
+     * @param string|null $language Two-letter ISO-639-2 language code
+     *
      * @see http://www.loc.gov/standards/iso639-2/
+     *
      * @return self
      */
     public function withLanguage(?string $language): self
@@ -203,7 +215,7 @@ final class Locale
     }
 
     /**
-     * @return null|string ICU calendar
+     * @return string|null ICU calendar
      */
     public function calendar(): ?string
     {
@@ -211,7 +223,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $calendar ICU calendar
+     * @param string|null $calendar ICU calendar
+     *
      * @return self
      */
     public function withCalendar(?string $calendar): self
@@ -221,9 +234,8 @@ final class Locale
         return $new;
     }
 
-
     /**
-     * @return null|string ICU collation
+     * @return string|null ICU collation
      */
     public function collation(): ?string
     {
@@ -231,7 +243,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $collation ICU collation
+     * @param string|null $collation ICU collation
+     *
      * @return self
      */
     public function withCollation(?string $collation): self
@@ -242,7 +255,7 @@ final class Locale
     }
 
     /**
-     * @return null|string ICU numbers
+     * @return string|null ICU numbers
      */
     public function numbers(): ?string
     {
@@ -250,7 +263,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $numbers ICU numbers
+     * @param string|null $numbers ICU numbers
+     *
      * @return self
      */
     public function withNumbers(?string $numbers): self
@@ -262,6 +276,7 @@ final class Locale
 
     /**
      * @return string Two-letter ISO 3166-1 country code
+     *
      * @see https://www.iso.org/iso-3166-country-codes.html
      */
     public function region(): ?string
@@ -270,8 +285,10 @@ final class Locale
     }
 
     /**
-     * @param null|string $region Two-letter ISO 3166-1 country code
+     * @param string|null $region Two-letter ISO 3166-1 country code
+     *
      * @see https://www.iso.org/iso-3166-country-codes.html
+     *
      * @return self
      */
     public function withRegion(?string $region): self
@@ -290,7 +307,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $currency ICU currency
+     * @param string|null $currency ICU currency
+     *
      * @return self
      */
     public function withCurrency(?string $currency): self
@@ -302,7 +320,7 @@ final class Locale
     }
 
     /**
-     * @return null|string extended language subtags
+     * @return string|null extended language subtags
      */
     public function extendedLanguage(): ?string
     {
@@ -310,7 +328,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $extendedLanguage extended language subtags
+     * @param string|null $extendedLanguage extended language subtags
+     *
      * @return self
      */
     public function withExtendedLanguage(?string $extendedLanguage): self
@@ -321,9 +340,8 @@ final class Locale
         return $new;
     }
 
-
     /**
-     * @return null|string
+     * @return string|null
      */
     public function private(): ?string
     {
@@ -331,7 +349,8 @@ final class Locale
     }
 
     /**
-     * @param null|string $private
+     * @param string|null $private
+     *
      * @return self
      */
     public function withPrivate(?string $private): self
@@ -344,6 +363,7 @@ final class Locale
 
     /**
      * @return string regular expression for parsing BCP 47
+     *
      * @see https://tools.ietf.org/html/bcp47
      */
     private static function getBCP47Regex(): string
