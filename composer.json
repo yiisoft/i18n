@@ -21,8 +21,11 @@
         "php": "^7.4|^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.3",
-        "phan/phan": "^3.0"
+        "phan/phan": "^3.0",
+        "phpunit/phpunit": "^9.4",
+        "roave/infection-static-analysis-plugin": "^1.5",
+        "spatie/phpunit-watcher": "^1.23",
+        "vimeo/psalm": "^4.2"
     },
     "autoload": {
         "psr-4": {
