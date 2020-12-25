@@ -10,35 +10,35 @@ use Yiisoft\I18n\Locale;
 /**
  * @group i18n
  */
-class LocaleTest extends Testcase
+final class LocaleTest extends Testcase
 {
-    public function testInvalidConstructorShouldThrowException()
+    public function testInvalidConstructorShouldThrowException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         new Locale('invalid-locale_zz-123');
     }
 
-    public function testLanguageParsedCorrectly()
+    public function testLanguageParsedCorrectly(): void
     {
         $locale = new Locale('en');
         $this->assertSame('en', $locale->language());
     }
 
-    public function testRegionParsedCorrectly()
+    public function testRegionParsedCorrectly(): void
     {
         $locale = new Locale('fr-CA');
         $this->assertSame('fr', $locale->language());
         $this->assertSame('CA', $locale->region());
     }
 
-    public function testScriptParsedCorrectly()
+    public function testScriptParsedCorrectly(): void
     {
         $locale = new Locale('zh-Hans');
         $this->assertSame('zh', $locale->language());
         $this->assertSame('Hans', $locale->script());
     }
 
-    public function testVariantParsedCorrectly()
+    public function testVariantParsedCorrectly(): void
     {
         $locale = new Locale('de-DE-1901');
         $this->assertSame('de', $locale->language());
@@ -46,13 +46,13 @@ class LocaleTest extends Testcase
         $this->assertSame('1901', $locale->variant());
     }
 
-    public function testPrivateParsedCorrectly()
+    public function testPrivateParsedCorrectly(): void
     {
         $locale = new Locale('x-fr-CH');
         $this->assertSame('fr-CH', $locale->private());
     }
 
-    public function testAsString()
+    public function testAsString(): void
     {
         $localeString = 'en-GB-boont-r-extended-sequence-x-private';
         $locale = new Locale($localeString);
@@ -60,7 +60,7 @@ class LocaleTest extends Testcase
         $this->assertSame($localeString, $locale->asString());
     }
 
-    public function testWithLanguage()
+    public function testWithLanguage(): void
     {
         $locale = new Locale('ru-RU');
         $newLocale = $locale->withLanguage('en');
@@ -69,7 +69,7 @@ class LocaleTest extends Testcase
         $this->assertSame('en', $newLocale->language());
     }
 
-    public function testWithPrivate()
+    public function testWithPrivate(): void
     {
         $locale = new Locale('en-GB-boont-x-private');
         $newLocale = $locale->withPrivate('newprivate');
@@ -78,7 +78,7 @@ class LocaleTest extends Testcase
         $this->assertSame('newprivate', $newLocale->private());
     }
 
-    public function testFallback()
+    public function testFallback(): void
     {
         $locale = new Locale('en-GB-boont-x-private');
 

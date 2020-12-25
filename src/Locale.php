@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\I18n;
 
+use InvalidArgumentException;
+
 /**
  * Locale stores locale information created from BCP 47 formatted string.
  *
@@ -84,12 +86,12 @@ final class Locale
      *
      * @see https://tools.ietf.org/html/bcp47
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(string $localeString)
     {
         if (!preg_match(self::getBCP47Regex(), $localeString, $matches)) {
-            throw new \InvalidArgumentException($localeString . ' is not valid BCP 47 formatted locale string.');
+            throw new InvalidArgumentException($localeString . ' is not valid BCP 47 formatted locale string.');
         }
 
         if (!empty($matches['language'])) {
@@ -391,7 +393,7 @@ final class Locale
     }
 
     /**
-     * @return string
+     * @return string Locale string.
      */
     public function asString(): string
     {
