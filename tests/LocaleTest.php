@@ -24,7 +24,7 @@ final class LocaleTest extends Testcase
         $this->assertSame('en', $locale->language());
     }
 
-    public function testLanguageParsedIsLowercased(): void
+    public function testLanguageIsNormalizedCorrectly(): void
     {
         $locale = new Locale('EN');
         $this->assertSame('en', $locale->language());
@@ -33,22 +33,30 @@ final class LocaleTest extends Testcase
     public function testRegionParsedCorrectly(): void
     {
         $locale = new Locale('fr-CA');
-        $this->assertSame('fr', $locale->language());
+        $this->assertSame('CA', $locale->region());
+    }
+
+    public function testRegionIsNormalizedCorrectly(): void
+    {
+        $locale = new Locale('fr-ca');
         $this->assertSame('CA', $locale->region());
     }
 
     public function testScriptParsedCorrectly(): void
     {
         $locale = new Locale('zh-Hans');
-        $this->assertSame('zh', $locale->language());
+        $this->assertSame('Hans', $locale->script());
+    }
+
+    public function testScriptIsNormalizedCorrectly(): void
+    {
+        $locale = new Locale('zh-hANS');
         $this->assertSame('Hans', $locale->script());
     }
 
     public function testVariantParsedCorrectly(): void
     {
         $locale = new Locale('de-DE-1901');
-        $this->assertSame('de', $locale->language());
-        $this->assertSame('DE', $locale->region());
         $this->assertSame('1901', $locale->variant());
     }
 
@@ -129,6 +137,26 @@ final class LocaleTest extends Testcase
         $this->assertNotSame($locale, $newLocale);
     }
 
+    public function testWithExtendedLanguage(): void
+    {
+        $locale = new Locale('zh-CN');
+        $newLocale = $locale->withExtendedLanguage('cmn');
+
+        $this->assertNull($locale->extendedLanguage());
+        $this->assertSame('cmn', $newLocale->extendedLanguage());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithCurrency(): void
+    {
+        $locale = new Locale('uk-UA');
+        $newLocale = $locale->withCurrency('USD');
+
+        $this->assertNull($locale->currency());
+        $this->assertSame('USD', $newLocale->currency());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
     public function testWithScript(): void
     {
         $locale = new Locale('zh');
@@ -136,6 +164,46 @@ final class LocaleTest extends Testcase
 
         $this->assertNull($locale->script());
         $this->assertSame('Hans', $newLocale->script());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithRegion(): void
+    {
+        $locale = new Locale('fr');
+        $newLocale = $locale->withRegion('CA');
+
+        $this->assertNull($locale->region());
+        $this->assertSame('CA', $newLocale->region());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithNumbers(): void
+    {
+        $locale = new Locale('fr');
+        $newLocale = $locale->withNumbers('latn');
+
+        $this->assertNull($locale->numbers());
+        $this->assertSame('latn', $newLocale->numbers());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithCollation(): void
+    {
+        $locale = new Locale('fr');
+        $newLocale = $locale->withCollation('traditional');
+
+        $this->assertNull($locale->collation());
+        $this->assertSame('traditional', $newLocale->collation());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithVariant(): void
+    {
+        $locale = new Locale('de-DE');
+        $newLocale = $locale->withVariant('1901');
+
+        $this->assertNull($locale->variant());
+        $this->assertSame('1901', $newLocale->variant());
         $this->assertNotSame($locale, $newLocale);
     }
 
