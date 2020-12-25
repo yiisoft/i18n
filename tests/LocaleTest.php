@@ -114,7 +114,6 @@ final class LocaleTest extends Testcase
 
         $this->assertSame($localeStringGrandFathered, $localeGrandFathered->asString());
         $this->assertSame($localeStringGrandFathered, (string)$localeGrandFathered);
-
     }
 
     public function testWithLanguage(): void
