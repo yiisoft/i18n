@@ -4,9 +4,7 @@
     "description": "Yii i18n",
     "keywords": [
         "i18n",
-        "translation",
-        "internationalization",
-        "formatting"
+        "locale"
     ],
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
@@ -21,7 +19,6 @@
         "php": "^7.4|^8.0"
     },
     "require-dev": {
-        "phan/phan": "^3.0",
         "phpunit/phpunit": "^9.4",
         "roave/infection-static-analysis-plugin": "^1.5",
         "spatie/phpunit-watcher": "^1.23",
