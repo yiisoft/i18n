@@ -5,81 +5,81 @@ declare(strict_types=1);
 namespace Yiisoft\I18n;
 
 /**
- * Locale stores locale information created from BCP 47 formatted string
- * https://tools.ietf.org/html/bcp47
+ * Locale stores locale information created from BCP 47 formatted string.
+ * @see https://tools.ietf.org/html/bcp47
  */
 final class Locale
 {
     /**
-     * @var string|null Two-letter ISO-639-2 language code
+     * @var string|null Two-letter ISO-639-2 language code.
      *
      * @see http://www.loc.gov/standards/iso639-2/
      */
-    private $language;
+    private ?string $language = null;
 
     /**
-     * @var string|null extended language subtags
+     * @var string|null Extended language subtags.
      */
-    private $extendedLanguage;
+    private ?string $extendedLanguage = null;
 
     /**
      * @var string|null
      */
-    private $extension;
+    private ?string $extension = null;
 
     /**
-     * @var string|null Four-letter ISO 15924 script code
+     * @var string|null Four-letter ISO 15924 script code.
      *
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
      */
-    private $script;
+    private ?string $script = null;
 
     /**
-     * @var string|null Two-letter ISO 3166-1 country code
+     * @var string|null Two-letter ISO 3166-1 country code.
      *
      * @see https://www.iso.org/iso-3166-country-codes.html
      */
-    private $region;
+    private ?string $region = null;
 
     /**
-     * @var string|null variant of language conventions to use
+     * @var string|null variant of language conventions to use.
      */
-    private $variant;
+    private ?string $variant = null;
 
     /**
-     * @var string|null ICU currency
+     * @var string|null ICU currency.
      */
-    private $currency;
+    private ?string $currency = null;
 
     /**
-     * @var string|null ICU calendar
+     * @var string|null ICU calendar.
      */
-    private $calendar;
+    private ?string $calendar = null;
 
     /**
-     * @var string ICU collation
+     * @var string|null ICU collation.
      */
-    private $collation;
+    private ?string $collation = null;
 
     /**
-     * @var string|null ICU numbers
+     * @var string|null ICU numbers.
      */
-    private $numbers;
-
-    /**
-     * @var string|null
-     */
-    private $grandfathered;
+    private ?string $numbers = null;
 
     /**
      * @var string|null
      */
-    private $private;
+    private ?string $grandfathered = null;
+
+    /**
+     * @var string|null
+     */
+    private ?string $private = null;
 
     /**
      * Locale constructor.
      *
-     * @param string $localeString BCP 47 formatted locale string
+     * @param string $localeString BCP 47 formatted locale string.
      *
      * @see https://tools.ietf.org/html/bcp47
      *
@@ -88,7 +88,7 @@ final class Locale
     public function __construct(string $localeString)
     {
         if (!preg_match(self::getBCP47Regex(), $localeString, $matches)) {
-            throw new \InvalidArgumentException($localeString . ' is not valid BCP 47 formatted locale string');
+            throw new \InvalidArgumentException($localeString . ' is not valid BCP 47 formatted locale string.');
         }
 
         if (!empty($matches['language'])) {
@@ -147,7 +147,7 @@ final class Locale
     }
 
     /**
-     * @return string Four-letter ISO 15924 script code
+     * @return string Four-letter ISO 15924 script code.
      *
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
      */
@@ -157,7 +157,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $script Four-letter ISO 15924 script code
+     * @param string|null $script Four-letter ISO 15924 script code.
      *
      * @see http://www.unicode.org/iso15924/iso15924-codes.html
      *
@@ -171,7 +171,7 @@ final class Locale
     }
 
     /**
-     * @return string variant of language conventions to use
+     * @return string Variant of language conventions to use.
      */
     public function variant(): ?string
     {
@@ -179,7 +179,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $variant variant of language conventions to use
+     * @param string|null $variant Variant of language conventions to use.
      *
      * @return self
      */
@@ -191,17 +191,17 @@ final class Locale
     }
 
     /**
-     * @return string|null Two-letter ISO-639-2 language code
+     * @return string|null Two-letter ISO-639-2 language code.
      *
      * @see http://www.loc.gov/standards/iso639-2/
      */
-    public function language(): string
+    public function language(): ?string
     {
         return $this->language;
     }
 
     /**
-     * @param string|null $language Two-letter ISO-639-2 language code
+     * @param string|null $language Two-letter ISO-639-2 language code.
      *
      * @see http://www.loc.gov/standards/iso639-2/
      *
@@ -215,7 +215,7 @@ final class Locale
     }
 
     /**
-     * @return string|null ICU calendar
+     * @return string|null ICU calendar.
      */
     public function calendar(): ?string
     {
@@ -223,7 +223,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $calendar ICU calendar
+     * @param string|null $calendar ICU calendar.
      *
      * @return self
      */
@@ -235,7 +235,7 @@ final class Locale
     }
 
     /**
-     * @return string|null ICU collation
+     * @return string|null ICU collation.
      */
     public function collation(): ?string
     {
@@ -243,7 +243,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $collation ICU collation
+     * @param string|null $collation ICU collation.
      *
      * @return self
      */
@@ -255,7 +255,7 @@ final class Locale
     }
 
     /**
-     * @return string|null ICU numbers
+     * @return string|null ICU numbers.
      */
     public function numbers(): ?string
     {
@@ -263,7 +263,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $numbers ICU numbers
+     * @param string|null $numbers ICU numbers.
      *
      * @return self
      */
@@ -275,7 +275,7 @@ final class Locale
     }
 
     /**
-     * @return string Two-letter ISO 3166-1 country code
+     * @return string Two-letter ISO 3166-1 country code.
      *
      * @see https://www.iso.org/iso-3166-country-codes.html
      */
@@ -285,7 +285,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $region Two-letter ISO 3166-1 country code
+     * @param string|null $region Two-letter ISO 3166-1 country code.
      *
      * @see https://www.iso.org/iso-3166-country-codes.html
      *
@@ -299,7 +299,7 @@ final class Locale
     }
 
     /**
-     * @return string ICU currency
+     * @return string ICU currency.
      */
     public function currency(): ?string
     {
@@ -307,7 +307,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $currency ICU currency
+     * @param string|null $currency ICU currency.
      *
      * @return self
      */
@@ -320,7 +320,7 @@ final class Locale
     }
 
     /**
-     * @return string|null extended language subtags
+     * @return string|null Extended language subtags.
      */
     public function extendedLanguage(): ?string
     {
@@ -328,7 +328,7 @@ final class Locale
     }
 
     /**
-     * @param string|null $extendedLanguage extended language subtags
+     * @param string|null $extendedLanguage Extended language subtags.
      *
      * @return self
      */
@@ -362,7 +362,7 @@ final class Locale
     }
 
     /**
-     * @return string regular expression for parsing BCP 47
+     * @return string Regular expression for parsing BCP 47.
      *
      * @see https://tools.ietf.org/html/bcp47
      */
@@ -451,9 +451,9 @@ final class Locale
     }
 
     /**
-     * Returns fallback locale
+     * Returns fallback locale.
      *
-     * @return self fallback locale
+     * @return self Fallback locale.
      */
     public function fallbackLocale(): self
     {

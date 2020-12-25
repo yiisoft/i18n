@@ -1,5 +1,3 @@
-> This package was deprecated in favor of [yiisoft/translator](https://github.com/yiisoft/translator).
-
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
@@ -8,7 +6,7 @@
     <br>
 </p>
 
-The package provides internationalization capabilities such as message translation and message formatting.
+The package provides common internationalization utilities such as locale.
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/i18n/v/stable.png)](https://packagist.org/packages/yiisoft/i18n)
 [![Total Downloads](https://poser.pugx.org/yiisoft/i18n/downloads.png)](https://packagist.org/packages/yiisoft/i18n)
@@ -18,8 +16,6 @@ The package provides internationalization capabilities such as message translati
 
 ## Features
 
-- Message translation with pluggable message storages.
-- Message formatting with pluggable formatters.
 
 ## General usage
 
