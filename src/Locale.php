@@ -6,6 +6,7 @@ namespace Yiisoft\I18n;
 
 /**
  * Locale stores locale information created from BCP 47 formatted string.
+ *
  * @see https://tools.ietf.org/html/bcp47
  */
 final class Locale
