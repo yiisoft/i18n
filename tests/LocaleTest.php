@@ -24,6 +24,12 @@ final class LocaleTest extends Testcase
         $this->assertSame('en', $locale->language());
     }
 
+    public function testLanguageParsedIsLowercased(): void
+    {
+        $locale = new Locale('EN');
+        $this->assertSame('en', $locale->language());
+    }
+
     public function testRegionParsedCorrectly(): void
     {
         $locale = new Locale('fr-CA');
@@ -52,12 +58,55 @@ final class LocaleTest extends Testcase
         $this->assertSame('fr-CH', $locale->private());
     }
 
+    public function testCalendarParsedCorrectly(): void
+    {
+        $locale = new Locale('ru-RU@calendar=buddhist');
+        $this->assertSame('buddhist', $locale->calendar());
+    }
+
+    public function testCollationParsedCorrectly(): void
+    {
+        $locale = new Locale('es@collation=traditional');
+        $this->assertSame('traditional', $locale->collation());
+    }
+
+    public function testNumbersParsedCorrectly(): void
+    {
+        $locale = new Locale('ru-RU@numbers=latn');
+        $this->assertSame('latn', $locale->numbers());
+    }
+
+    public function testCurrencyParsedCorrectly(): void
+    {
+        $locale = new Locale('ru-RU@currency=USD');
+        $this->assertSame('USD', $locale->currency());
+    }
+
+    public function testExtendedLanguageParsedCorrectly(): void
+    {
+        $locale = new Locale('zh-cmn-Hans-CN');
+        $this->assertSame('cmn', $locale->extendedLanguage());
+    }
+
+    public function testPrivateIsParsedCorrectly(): void
+    {
+        $locale = new Locale('en-GB-boont-x-private');
+        $this->assertSame('private', $locale->private());
+    }
+
     public function testAsString(): void
     {
-        $localeString = 'en-GB-boont-r-extended-sequence-x-private';
+        $localeString = 'zh-cmn-Hans-CN-boont-r-extended-sequence-x-private@currency=USD;collation=traditional;calendar=buddhist;numbers=latn';
+        $localeStringGrandFathered = 'zh-xiang';
         $locale = new Locale($localeString);
+        $localeGrandFathered = new Locale($localeStringGrandFathered);
 
         $this->assertSame($localeString, $locale->asString());
+        $this->assertSame($localeString, (string)$locale);
+
+        $this->assertSame($localeStringGrandFathered, $localeGrandFathered->asString());
+        $this->assertSame($localeStringGrandFathered, (string)$localeGrandFathered);
+
     }
 
     public function testWithLanguage(): void
@@ -67,6 +116,7 @@ final class LocaleTest extends Testcase
 
         $this->assertSame('ru', $locale->language());
         $this->assertSame('en', $newLocale->language());
+        $this->assertNotSame($locale, $newLocale);
     }
 
     public function testWithPrivate(): void
@@ -76,16 +126,51 @@ final class LocaleTest extends Testcase
 
         $this->assertSame('private', $locale->private());
         $this->assertSame('newprivate', $newLocale->private());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithScript(): void
+    {
+        $locale = new Locale('zh');
+        $newLocale = $locale->withScript('Hans');
+
+        $this->assertNull($locale->script());
+        $this->assertSame('Hans', $newLocale->script());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithCalendar(): void
+    {
+        $locale = new Locale('ru-RU');
+        $newLocale = $locale->withCalendar('buddhist');
+
+        $this->assertNull($locale->calendar());
+        $this->assertSame('buddhist', $newLocale->calendar());
+        $this->assertNotSame($locale, $newLocale);
     }
 
     public function testFallback(): void
     {
         $locale = new Locale('en-GB-boont-x-private');
 
-        $fallbackLocale = $locale->fallbackLocale();
-        $this->assertSame('en-GB', $fallbackLocale->asString());
+        $fallbackLocale1 = $locale->fallbackLocale();
+        $this->assertSame('en-GB', $fallbackLocale1->asString());
+        $this->assertNotSame($locale, $fallbackLocale1);
 
-        $fallbackLocale = $fallbackLocale->fallbackLocale();
-        $this->assertSame('en', $fallbackLocale->asString());
+        $fallbackLocale2 = $fallbackLocale1->fallbackLocale();
+        $this->assertSame('en', $fallbackLocale2->asString());
+        $this->assertNotSame($fallbackLocale1, $fallbackLocale2);
+
+        $fallbackLocale3 = $fallbackLocale2->fallbackLocale();
+        $this->assertSame('en', $fallbackLocale3->asString());
+        $this->assertNotSame($fallbackLocale2, $fallbackLocale3);
+    }
+
+    public function testFallbackScript(): void
+    {
+        $locale = new Locale('zh-Hans');
+        $fallbackLocale = $locale->fallbackLocale();
+        $this->assertSame('zh', $fallbackLocale->asString());
+        $this->assertNotSame($locale, $fallbackLocale);
     }
 }
