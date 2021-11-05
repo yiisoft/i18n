@@ -1,6 +1,11 @@
 # Yii i18n Change Log
 
 
+## 1.1.1 under development
+
+- no changes in this release.
+
+
 ## 1.1.0 November 05, 2021
 
 - New #33: Add support for keywords `hours`, `colnumeric`, and `colcasefirst`. These
