@@ -60,14 +60,37 @@ final class Locale
     private ?string $calendar = null;
 
     /**
+     * @var string|null ICU case-first collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    private ?string $colcasefirst = null;
+
+    /**
      * @var string|null ICU collation.
      */
     private ?string $collation = null;
 
     /**
+     * @var string|null ICU numeric collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    private ?string $colnumeric = null;
+
+    /**
      * @var string|null ICU numbers.
      */
     private ?string $numbers = null;
+
+    /**
+     * @var string|null Unicode hour cycle identifier.
+     *
+     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     */
+    private ?string $hours = null;
 
     /**
      * @var string|null
@@ -134,8 +157,16 @@ final class Locale
                     $this->calendar = $value;
                 }
 
+                if ($key === 'colcasefirst') {
+                    $this->colcasefirst = $value;
+                }
+
                 if ($key === 'collation') {
                     $this->collation = $value;
+                }
+
+                if ($key === 'colnumeric') {
+                    $this->colnumeric = $value;
                 }
 
                 if ($key === 'currency') {
@@ -144,6 +175,10 @@ final class Locale
 
                 if ($key === 'numbers') {
                     $this->numbers = $value;
+                }
+
+                if ($key === 'hours') {
+                    $this->hours = $value;
                 }
             }
         }
@@ -238,6 +273,32 @@ final class Locale
     }
 
     /**
+     * @return string|null ICU case-first collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    public function colcasefirst(): ?string
+    {
+        return $this->colcasefirst;
+    }
+
+    /**
+     * @param string|null $colcasefirst ICU case-first collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     *
+     * @return self
+     */
+    public function withColcasefirst(?string $colcasefirst): self
+    {
+        $new = clone $this;
+        $new->colcasefirst = $colcasefirst;
+        return $new;
+    }
+
+    /**
      * @return string|null ICU collation.
      */
     public function collation(): ?string
@@ -258,6 +319,32 @@ final class Locale
     }
 
     /**
+     * @return string|null ICU numeric collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    public function colnumeric(): ?string
+    {
+        return $this->colnumeric;
+    }
+
+    /**
+     * @param string|null $colnumeric ICU numeric collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     *
+     * @return self
+     */
+    public function withColnumeric(?string $colnumeric): self
+    {
+        $new = clone $this;
+        $new->colnumeric = $colnumeric;
+        return $new;
+    }
+
+    /**
      * @return string|null ICU numbers.
      */
     public function numbers(): ?string
@@ -274,6 +361,30 @@ final class Locale
     {
         $new = clone $this;
         $new->numbers = $numbers;
+        return $new;
+    }
+
+    /**
+     * @return string|null Unicode hour cycle identifier.
+     *
+     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     */
+    public function hours(): ?string
+    {
+        return $this->hours;
+    }
+
+    /**
+     * @param string|null $hours Unicode hour cycle identifier.
+     *
+     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     *
+     * @return self
+     */
+    public function withHours(?string $hours): self
+    {
+        $new = clone $this;
+        $new->hours = $hours;
         return $new;
     }
 
@@ -434,14 +545,23 @@ final class Locale
         if ($this->currency !== null) {
             $keywords[] = 'currency=' . $this->currency;
         }
+        if ($this->colcasefirst !== null) {
+            $keywords[] = 'colcasefirst=' . $this->colcasefirst;
+        }
         if ($this->collation !== null) {
             $keywords[] = 'collation=' . $this->collation;
+        }
+        if ($this->colnumeric !== null) {
+            $keywords[] = 'colnumeric=' . $this->colnumeric;
         }
         if ($this->calendar !== null) {
             $keywords[] = 'calendar=' . $this->calendar;
         }
         if ($this->numbers !== null) {
             $keywords[] = 'numbers=' . $this->numbers;
+        }
+        if ($this->hours !== null) {
+            $keywords[] = 'hours=' . $this->hours;
         }
 
         $string = implode('-', $result);
@@ -462,10 +582,13 @@ final class Locale
     {
         $fallback = $this
             ->withCalendar(null)
+            ->withColcasefirst(null)
             ->withCollation(null)
+            ->withColnumeric(null)
             ->withCurrency(null)
             ->withExtendedLanguage(null)
             ->withNumbers(null)
+            ->withHours(null)
             ->withPrivate(null);
 
         if ($fallback->variant() !== null) {
