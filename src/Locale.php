@@ -65,6 +65,14 @@ final class Locale
     private ?string $collation = null;
 
     /**
+     * @var string|null ICU numeric collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    private ?string $colnumeric = null;
+
+    /**
      * @var string|null ICU numbers.
      */
     private ?string $numbers = null;
@@ -143,6 +151,10 @@ final class Locale
 
                 if ($key === 'collation') {
                     $this->collation = $value;
+                }
+
+                if ($key === 'colnumeric') {
+                    $this->colnumeric = $value;
                 }
 
                 if ($key === 'currency') {
@@ -265,6 +277,32 @@ final class Locale
     {
         $new = clone $this;
         $new->collation = $collation;
+        return $new;
+    }
+
+    /**
+     * @return string|null ICU numeric collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    public function colnumeric(): ?string
+    {
+        return $this->colnumeric;
+    }
+
+    /**
+     * @param string|null $colnumeric ICU numeric collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     *
+     * @return self
+     */
+    public function withColnumeric(?string $colnumeric): self
+    {
+        $new = clone $this;
+        $new->colnumeric = $colnumeric;
         return $new;
     }
 
@@ -472,6 +510,9 @@ final class Locale
         if ($this->collation !== null) {
             $keywords[] = 'collation=' . $this->collation;
         }
+        if ($this->colnumeric !== null) {
+            $keywords[] = 'colnumeric=' . $this->colnumeric;
+        }
         if ($this->calendar !== null) {
             $keywords[] = 'calendar=' . $this->calendar;
         }
@@ -501,6 +542,7 @@ final class Locale
         $fallback = $this
             ->withCalendar(null)
             ->withCollation(null)
+            ->withColnumeric(null)
             ->withCurrency(null)
             ->withExtendedLanguage(null)
             ->withNumbers(null)
