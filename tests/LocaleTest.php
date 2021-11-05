@@ -72,6 +72,12 @@ final class LocaleTest extends Testcase
         $this->assertSame('buddhist', $locale->calendar());
     }
 
+    public function testColcasefirstParsedCorrectly(): void
+    {
+        $locale = new Locale('fr-Latn-FR@colcasefirst=upper');
+        $this->assertSame('upper', $locale->colcasefirst());
+    }
+
     public function testCollationParsedCorrectly(): void
     {
         $locale = new Locale('es@collation=traditional');
@@ -116,7 +122,9 @@ final class LocaleTest extends Testcase
 
     public function testAsString(): void
     {
-        $localeString = 'zh-cmn-Hans-CN-boont-r-extended-sequence-x-private@currency=USD;collation=traditional;colnumeric=no;calendar=buddhist;numbers=latn;hours=h24';
+        $localeString = 'zh-cmn-Hans-CN-boont-r-extended-sequence-x-private@'
+            . 'currency=USD;colcasefirst=lower;collation=traditional;colnumeric=no;'
+            . 'calendar=buddhist;numbers=latn;hours=h24';
         $localeStringGrandFathered = 'zh-xiang';
         $locale = new Locale($localeString);
         $localeGrandFathered = new Locale($localeStringGrandFathered);
@@ -205,6 +213,16 @@ final class LocaleTest extends Testcase
 
         $this->assertNull($locale->hours());
         $this->assertSame('h12', $newLocale->hours());
+        $this->assertNotSame($locale, $newLocale);
+    }
+
+    public function testWithColcasefirst(): void
+    {
+        $locale = new Locale('fr');
+        $newLocale = $locale->withColcasefirst('false');
+
+        $this->assertNull($locale->colcasefirst());
+        $this->assertSame('false', $newLocale->colcasefirst());
         $this->assertNotSame($locale, $newLocale);
     }
 

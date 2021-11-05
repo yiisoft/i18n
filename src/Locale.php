@@ -60,6 +60,14 @@ final class Locale
     private ?string $calendar = null;
 
     /**
+     * @var string|null ICU case-first collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    private ?string $colcasefirst = null;
+
+    /**
      * @var string|null ICU collation.
      */
     private ?string $collation = null;
@@ -147,6 +155,10 @@ final class Locale
 
                 if ($key === 'calendar') {
                     $this->calendar = $value;
+                }
+
+                if ($key === 'colcasefirst') {
+                    $this->colcasefirst = $value;
                 }
 
                 if ($key === 'collation') {
@@ -257,6 +269,32 @@ final class Locale
     {
         $new = clone $this;
         $new->calendar = $calendar;
+        return $new;
+    }
+
+    /**
+     * @return string|null ICU case-first collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     */
+    public function colcasefirst(): ?string
+    {
+        return $this->colcasefirst;
+    }
+
+    /**
+     * @param string|null $colcasefirst ICU case-first collation.
+     *
+     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     *
+     * @return self
+     */
+    public function withColcasefirst(?string $colcasefirst): self
+    {
+        $new = clone $this;
+        $new->colcasefirst = $colcasefirst;
         return $new;
     }
 
@@ -507,6 +545,9 @@ final class Locale
         if ($this->currency !== null) {
             $keywords[] = 'currency=' . $this->currency;
         }
+        if ($this->colcasefirst !== null) {
+            $keywords[] = 'colcasefirst=' . $this->colcasefirst;
+        }
         if ($this->collation !== null) {
             $keywords[] = 'collation=' . $this->collation;
         }
@@ -541,6 +582,7 @@ final class Locale
     {
         $fallback = $this
             ->withCalendar(null)
+            ->withColcasefirst(null)
             ->withCollation(null)
             ->withColnumeric(null)
             ->withCurrency(null)
