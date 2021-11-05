@@ -70,6 +70,13 @@ final class Locale
     private ?string $numbers = null;
 
     /**
+     * @var string|null Unicode hour cycle identifier.
+     *
+     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     */
+    private ?string $hours = null;
+
+    /**
      * @var string|null
      */
     private ?string $grandfathered = null;
@@ -144,6 +151,10 @@ final class Locale
 
                 if ($key === 'numbers') {
                     $this->numbers = $value;
+                }
+
+                if ($key === 'hours') {
+                    $this->hours = $value;
                 }
             }
         }
@@ -274,6 +285,30 @@ final class Locale
     {
         $new = clone $this;
         $new->numbers = $numbers;
+        return $new;
+    }
+
+    /**
+     * @return string|null Unicode hour cycle identifier.
+     *
+     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     */
+    public function hours(): ?string
+    {
+        return $this->hours;
+    }
+
+    /**
+     * @param string|null $hours Unicode hour cycle identifier.
+     *
+     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     *
+     * @return self
+     */
+    public function withHours(?string $hours): self
+    {
+        $new = clone $this;
+        $new->hours = $hours;
         return $new;
     }
 
@@ -443,6 +478,9 @@ final class Locale
         if ($this->numbers !== null) {
             $keywords[] = 'numbers=' . $this->numbers;
         }
+        if ($this->hours !== null) {
+            $keywords[] = 'hours=' . $this->hours;
+        }
 
         $string = implode('-', $result);
 
@@ -466,6 +504,7 @@ final class Locale
             ->withCurrency(null)
             ->withExtendedLanguage(null)
             ->withNumbers(null)
+            ->withHours(null)
             ->withPrivate(null);
 
         if ($fallback->variant() !== null) {
