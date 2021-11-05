@@ -1,7 +1,7 @@
 # Yii i18n Change Log
 
 
-## 1.1.0 TBD
+## 1.1.0 under development
 
 - New #33: Add support for keywords `hours`, `colnumeric`, and `colcasefirst`. These
   keywords are part of the [ECMAScript 2022 Internationalization API Specification
