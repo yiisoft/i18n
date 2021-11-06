@@ -1,10 +1,8 @@
-# Yii i18n Change Log
-
+# Yii Internationalization Library Change Log
 
 ## 1.1.1 under development
 
 - no changes in this release.
-
 
 ## 1.1.0 November 05, 2021
 
@@ -20,6 +18,4 @@
 
 ## 1.0.0 December 25, 2020
 
-
 - Initial release.
-
