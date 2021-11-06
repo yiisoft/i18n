@@ -9,14 +9,14 @@ use InvalidArgumentException;
 /**
  * Locale stores locale information created from BCP 47 formatted string.
  *
- * @see https://tools.ietf.org/html/bcp47
+ * @link https://tools.ietf.org/html/bcp47
  */
 final class Locale
 {
     /**
      * @var string|null Two-letter ISO-639-2 language code.
      *
-     * @see http://www.loc.gov/standards/iso639-2/
+     * @link http://www.loc.gov/standards/iso639-2/
      */
     private ?string $language = null;
 
@@ -33,19 +33,19 @@ final class Locale
     /**
      * @var string|null Four-letter ISO 15924 script code.
      *
-     * @see http://www.unicode.org/iso15924/iso15924-codes.html
+     * @link http://www.unicode.org/iso15924/iso15924-codes.html
      */
     private ?string $script = null;
 
     /**
      * @var string|null Two-letter ISO 3166-1 country code.
      *
-     * @see https://www.iso.org/iso-3166-country-codes.html
+     * @link https://www.iso.org/iso-3166-country-codes.html
      */
     private ?string $region = null;
 
     /**
-     * @var string|null variant of language conventions to use.
+     * @var string|null Variant of language conventions to use.
      */
     private ?string $variant = null;
 
@@ -62,8 +62,8 @@ final class Locale
     /**
      * @var string|null ICU case-first collation.
      *
-     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
-     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     * @link https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
      */
     private ?string $colcasefirst = null;
 
@@ -75,8 +75,8 @@ final class Locale
     /**
      * @var string|null ICU numeric collation.
      *
-     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
-     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     * @link https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
      */
     private ?string $colnumeric = null;
 
@@ -88,7 +88,7 @@ final class Locale
     /**
      * @var string|null Unicode hour cycle identifier.
      *
-     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     * @link https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
      */
     private ?string $hours = null;
 
@@ -107,7 +107,7 @@ final class Locale
      *
      * @param string $localeString BCP 47 formatted locale string.
      *
-     * @see https://tools.ietf.org/html/bcp47
+     * @link https://tools.ietf.org/html/bcp47
      *
      * @throws InvalidArgumentException
      */
@@ -187,7 +187,7 @@ final class Locale
     /**
      * @return string Four-letter ISO 15924 script code.
      *
-     * @see http://www.unicode.org/iso15924/iso15924-codes.html
+     * @link http://www.unicode.org/iso15924/iso15924-codes.html
      */
     public function script(): ?string
     {
@@ -197,7 +197,7 @@ final class Locale
     /**
      * @param string|null $script Four-letter ISO 15924 script code.
      *
-     * @see http://www.unicode.org/iso15924/iso15924-codes.html
+     * @link http://www.unicode.org/iso15924/iso15924-codes.html
      *
      * @return self
      */
@@ -231,7 +231,7 @@ final class Locale
     /**
      * @return string|null Two-letter ISO-639-2 language code.
      *
-     * @see http://www.loc.gov/standards/iso639-2/
+     * @link http://www.loc.gov/standards/iso639-2/
      */
     public function language(): ?string
     {
@@ -241,7 +241,7 @@ final class Locale
     /**
      * @param string|null $language Two-letter ISO-639-2 language code.
      *
-     * @see http://www.loc.gov/standards/iso639-2/
+     * @link http://www.loc.gov/standards/iso639-2/
      *
      * @return self
      */
@@ -275,8 +275,8 @@ final class Locale
     /**
      * @return string|null ICU case-first collation.
      *
-     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
-     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     * @link https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
      */
     public function colcasefirst(): ?string
     {
@@ -286,8 +286,8 @@ final class Locale
     /**
      * @param string|null $colcasefirst ICU case-first collation.
      *
-     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
-     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     * @link https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
+     * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
      *
      * @return self
      */
@@ -321,8 +321,8 @@ final class Locale
     /**
      * @return string|null ICU numeric collation.
      *
-     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
-     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     * @link https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
      */
     public function colnumeric(): ?string
     {
@@ -332,8 +332,8 @@ final class Locale
     /**
      * @param string|null $colnumeric ICU numeric collation.
      *
-     * @see https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
-     * @see https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
+     * @link https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
+     * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
      *
      * @return self
      */
@@ -367,7 +367,7 @@ final class Locale
     /**
      * @return string|null Unicode hour cycle identifier.
      *
-     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     * @link https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
      */
     public function hours(): ?string
     {
@@ -377,7 +377,7 @@ final class Locale
     /**
      * @param string|null $hours Unicode hour cycle identifier.
      *
-     * @see https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
+     * @link https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
      *
      * @return self
      */
@@ -391,7 +391,7 @@ final class Locale
     /**
      * @return string Two-letter ISO 3166-1 country code.
      *
-     * @see https://www.iso.org/iso-3166-country-codes.html
+     * @link https://www.iso.org/iso-3166-country-codes.html
      */
     public function region(): ?string
     {
@@ -401,7 +401,7 @@ final class Locale
     /**
      * @param string|null $region Two-letter ISO 3166-1 country code.
      *
-     * @see https://www.iso.org/iso-3166-country-codes.html
+     * @link https://www.iso.org/iso-3166-country-codes.html
      *
      * @return self
      */
@@ -478,7 +478,7 @@ final class Locale
     /**
      * @return string Regular expression for parsing BCP 47.
      *
-     * @see https://tools.ietf.org/html/bcp47
+     * @link https://tools.ietf.org/html/bcp47
      */
     private static function getBCP47Regex(): string
     {

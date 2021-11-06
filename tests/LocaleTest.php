@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Yii\I18n\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\I18n\Locale;
 
-/**
- * @group i18n
- */
 final class LocaleTest extends Testcase
 {
     public function testInvalidConstructorShouldThrowException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('invalid-locale_zz-123 is not valid BCP 47 formatted locale string.');
         new Locale('invalid-locale_zz-123');
     }
 
@@ -130,10 +129,26 @@ final class LocaleTest extends Testcase
         $localeGrandFathered = new Locale($localeStringGrandFathered);
 
         $this->assertSame($localeString, $locale->asString());
-        $this->assertSame($localeString, (string)$locale);
+        $this->assertSame($localeString, (string) $locale);
 
         $this->assertSame($localeStringGrandFathered, $localeGrandFathered->asString());
-        $this->assertSame($localeStringGrandFathered, (string)$localeGrandFathered);
+        $this->assertSame($localeStringGrandFathered, (string) $localeGrandFathered);
+    }
+
+    public function testAsStringWithIrregularGrandFathered(): void
+    {
+        $locale = new Locale('i-enochian');
+
+        $this->assertSame('i-enochian', $locale->asString());
+        $this->assertNull($locale->language());
+    }
+
+    public function testAsStringWithRegularGrandFathered(): void
+    {
+        $locale = new Locale('art-lojban');
+
+        $this->assertSame('art-lojban', $locale->asString());
+        $this->assertNull($locale->language());
     }
 
     public function testWithLanguage(): void
