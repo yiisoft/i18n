@@ -1,6 +1,7 @@
 on:
   pull_request:
     paths-ignore:
+      - 'docs/**'
       - 'README.md'
       - 'CHANGELOG.md'
       - '.gitignore'
@@ -9,14 +10,12 @@ on:
 
   push:
     paths-ignore:
+      - 'docs/**'
       - 'README.md'
       - 'CHANGELOG.md'
       - '.gitignore'
       - '.gitattributes'
       - 'psalm.xml'
-
-  schedule:
-    - cron: '0 0 * * *'
 
 name: mutation test
 

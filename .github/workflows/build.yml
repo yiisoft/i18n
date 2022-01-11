@@ -1,6 +1,7 @@
 on:
   pull_request:
     paths-ignore:
+      - 'docs/**'
       - 'README.md'
       - 'CHANGELOG.md'
       - '.gitignore'
@@ -10,15 +11,13 @@ on:
 
   push:
     paths-ignore:
+      - 'docs/**'
       - 'README.md'
       - 'CHANGELOG.md'
       - '.gitignore'
       - '.gitattributes'
       - 'infection.json.dist'
       - 'psalm.xml'
-
-  schedule:
-    - cron: '0 0 * * *'
 
 name: build
 
