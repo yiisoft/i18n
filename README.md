@@ -42,7 +42,9 @@ echo $locale->region(); // CL
 $locale = $locale->withLanguage('en');
 echo $locale->asString(); // en-CL
 
-echo $locale->fallbackLocale()->asString(); // en
+echo $locale
+    ->fallbackLocale()
+    ->asString(); // en
 ```
 
 ## Testing
