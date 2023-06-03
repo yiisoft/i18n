@@ -12,7 +12,9 @@ final class LocaleProvider
 {
     private Locale $locale;
 
-    public function __construct(private Locale $defaultLocale)
+    public function __construct(
+        private Locale $defaultLocale
+    )
     {
     }
 

@@ -15,8 +15,8 @@ final class LocaleProviderTest extends TestCase
         $defaultLocale = new Locale('en');
 
         $localeProvider = new LocaleProvider($defaultLocale);
-        $locale = $localeProvider->get();
-        $this->assertSame($defaultLocale, $locale);
+        $this->assertSame($defaultLocale, $localeProvider->get());
+        $this->assertSame($defaultLocale, $localeProvider->getDefaultLocale());
     }
 
     public function testSetLocale(): void
@@ -26,6 +26,7 @@ final class LocaleProviderTest extends TestCase
 
         $localeProvider = new LocaleProvider($defaultLocale);
         $localeProvider->set($locale);
+
         $this->assertEquals($locale, $localeProvider->get());
     }
 }
