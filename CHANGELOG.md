@@ -2,7 +2,7 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- New #55: Add `LocaleProvider` (samdark)
 
 ## 1.1.0 November 05, 2021
 
