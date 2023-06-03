@@ -22,13 +22,13 @@ final class LocaleProvider
         return $this->locale ?? $this->defaultLocale;
     }
 
-    public function getDefaultLocale(): Locale
-    {
-        return $this->defaultLocale;
-    }
-
     public function set(Locale $locale): void
     {
         $this->locale = $locale;
+    }
+
+    public function isDefaultLocale(): bool
+    {
+        return $this->locale === null;
     }
 }
