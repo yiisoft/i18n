@@ -11,14 +11,9 @@ namespace Yiisoft\I18n;
 final class LocaleProvider
 {
     private Locale $locale;
-    private Locale $defaultLocale;
 
-    /**
-     * @param Locale $defaultLocale
-     */
-    public function __construct(Locale $defaultLocale)
+    public function __construct(private Locale $defaultLocale)
     {
-        $this->defaultLocale = $defaultLocale;
     }
 
     public function get(): Locale
