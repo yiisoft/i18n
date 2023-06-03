@@ -36,6 +36,8 @@ composer install yiisoft/i18n --prefer-dist
 
 ## General usage
 
+Use `Locale` as follows:
+
 ```php
 $locale = new \Yiisoft\I18n\Locale('es-CL');
 echo $locale->language(); // es
@@ -47,6 +49,31 @@ echo $locale->asString(); // en-CL
 echo $locale
     ->fallbackLocale()
     ->asString(); // en
+```
+
+Use `LocaleProvider` as follows:
+
+```php
+use \Yiisoft\I18n\LocaleProvider;
+
+final class MyService
+{
+    public function __construct(
+        private LocaleProvider $localeProvider
+    ) {    
+    }
+    
+    public function doIt(): void
+    {
+        $locale = $this->localeProvider->get();
+        if ($this->localeProvider->isDefaultLocale()) {
+            // ...
+        }
+        
+        // ...        
+    }
+    
+}
 ```
 
 ## Testing
