@@ -17,8 +17,10 @@
 
 The package provides common internationalization utilities:
 
-- `Locale` stores locale information created from BCP 47 formatted string. Can parse locale string, modify locale parts,
+- `Locale` stores locale information created from BCP 47 formatted string.
+  It can parse locale string, modify locale parts,
   form locale string from parts, and derive fallback locale.
+- `LocaleProvider` is a stateful service that stores current locale.
 
 ## Requirements
 
@@ -76,7 +78,7 @@ The code is statically analyzed with [Psalm](https://psalm.dev/). To run static 
 
 ## License
 
-The Yii Internationalization Library is free software. It is released under the terms of the BSD License.
+The Yii Internationalization Library is free software. It's released under the terms of the BSD License.
 Please see [`LICENSE`](./LICENSE.md) for more information.
 
 Maintained by [Yii Software](https://www.yiiframework.com/).
