@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Yiisoft\I18n\Tests;
 
 use PHPUnit\Framework\TestCase;
