@@ -1,6 +1,6 @@
 # Yii Internationalization Library Change Log
 
-## 1.1.1 under development
+## 1.2.0 June 04, 2023
 
 - New #55: Add `LocaleProvider` (samdark)
 - Chg #55: Raise major PHP version to 8 (samdark)
