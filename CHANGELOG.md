@@ -1,5 +1,9 @@
 # Yii Internationalization Library Change Log
 
+## 1.2.1 under development
+
+- no changes in this release.
+
 ## 1.2.0 June 04, 2023
 
 - New #55: Add `LocaleProvider` (samdark)
