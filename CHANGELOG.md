@@ -2,7 +2,7 @@
 
 ## 1.2.1 under development
 
-- no changes in this release.
+- Bug #56: Fix `LocaleProvider::isDefaultLocale()` giving a wrong result if locale is set explicitly to the one matching default (@samdark)
 
 ## 1.2.0 June 04, 2023
 

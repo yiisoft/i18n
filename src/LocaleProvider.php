@@ -29,6 +29,6 @@ final class LocaleProvider
 
     public function isDefaultLocale(): bool
     {
-        return $this->locale === null;
+        return $this->locale === null || $this->locale->asString() === $this->defaultLocale->asString();
     }
 }
