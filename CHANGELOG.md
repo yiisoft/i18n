@@ -1,6 +1,6 @@
 # Yii Internationalization Library Change Log
 
-## 1.2.1 under development
+## 1.2.1 June 10, 2023
 
 - Bug #56: Fix `LocaleProvider::isDefaultLocale()` giving a wrong result if locale is set explicitly to the one matching default (@samdark)
 
