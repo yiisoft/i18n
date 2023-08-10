@@ -2,7 +2,7 @@
 
 ## 1.2.2 under development
 
-- Enh: Add composer require checker into CI
+- no changes in this release.
 
 ## 1.2.1 June 10, 2023
 
@@ -10,8 +10,8 @@
 
 ## 1.2.0 June 04, 2023
 
-- New #55: Add `LocaleProvider` (samdark)
-- Chg #55: Raise major PHP version to 8 (samdark)
+- New #55: Add `LocaleProvider` (@samdark)
+- Chg #55: Raise major PHP version to 8 (@samdark)
 
 ## 1.1.0 November 05, 2021
 
@@ -23,7 +23,7 @@
     For more information see the [key/type definition for the Unicode Hour Cycle
     Identifier](https://www.unicode.org/reports/tr35/tr35-61/tr35.html#UnicodeHourCycleIdentifier).
   - `colnumeric` and `colcasefirst` are both collation settings defined as part
-    of the [Unicode Locale Data Markup Language](https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings) (ramsey)
+    of the [Unicode Locale Data Markup Language](https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings) (@ramsey)
 
 ## 1.0.0 December 25, 2020
 
