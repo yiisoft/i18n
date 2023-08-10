@@ -1,8 +1,17 @@
 # Yii Internationalization Library Change Log
 
-## 1.1.1 under development
+## 1.2.2 under development
 
 - Enh: Add composer require checker into CI
+
+## 1.2.1 June 10, 2023
+
+- Bug #56: Fix `LocaleProvider::isDefaultLocale()` giving a wrong result if locale is set explicitly to the one matching default (@samdark)
+
+## 1.2.0 June 04, 2023
+
+- New #55: Add `LocaleProvider` (samdark)
+- Chg #55: Raise major PHP version to 8 (samdark)
 
 ## 1.1.0 November 05, 2021
 

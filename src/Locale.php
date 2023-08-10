@@ -11,7 +11,7 @@ use InvalidArgumentException;
  *
  * @link https://tools.ietf.org/html/bcp47
  */
-final class Locale
+final class Locale implements \Stringable
 {
     /**
      * @var string|null Two-letter ISO-639-2 language code.
@@ -198,8 +198,6 @@ final class Locale
      * @param string|null $script Four-letter ISO 15924 script code.
      *
      * @link http://www.unicode.org/iso15924/iso15924-codes.html
-     *
-     * @return self
      */
     public function withScript(?string $script): self
     {
@@ -218,8 +216,6 @@ final class Locale
 
     /**
      * @param string|null $variant Variant of language conventions to use.
-     *
-     * @return self
      */
     public function withVariant(?string $variant): self
     {
@@ -242,8 +238,6 @@ final class Locale
      * @param string|null $language Two-letter ISO-639-2 language code.
      *
      * @link http://www.loc.gov/standards/iso639-2/
-     *
-     * @return self
      */
     public function withLanguage(?string $language): self
     {
@@ -262,8 +256,6 @@ final class Locale
 
     /**
      * @param string|null $calendar ICU calendar.
-     *
-     * @return self
      */
     public function withCalendar(?string $calendar): self
     {
@@ -288,8 +280,6 @@ final class Locale
      *
      * @link https://unicode-org.github.io/icu/userguide/collation/customization/#casefirst
      * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
-     *
-     * @return self
      */
     public function withColcasefirst(?string $colcasefirst): self
     {
@@ -308,8 +298,6 @@ final class Locale
 
     /**
      * @param string|null $collation ICU collation.
-     *
-     * @return self
      */
     public function withCollation(?string $collation): self
     {
@@ -334,8 +322,6 @@ final class Locale
      *
      * @link https://unicode-org.github.io/icu/userguide/collation/customization/#numericordering
      * @link https://www.unicode.org/reports/tr35/tr35-61/tr35-collation.html#Collation_Settings
-     *
-     * @return self
      */
     public function withColnumeric(?string $colnumeric): self
     {
@@ -354,8 +340,6 @@ final class Locale
 
     /**
      * @param string|null $numbers ICU numbers.
-     *
-     * @return self
      */
     public function withNumbers(?string $numbers): self
     {
@@ -378,8 +362,6 @@ final class Locale
      * @param string|null $hours Unicode hour cycle identifier.
      *
      * @link https://www.unicode.org/reports/tr35/#UnicodeHourCycleIdentifier
-     *
-     * @return self
      */
     public function withHours(?string $hours): self
     {
@@ -402,8 +384,6 @@ final class Locale
      * @param string|null $region Two-letter ISO 3166-1 country code.
      *
      * @link https://www.iso.org/iso-3166-country-codes.html
-     *
-     * @return self
      */
     public function withRegion(?string $region): self
     {
@@ -422,8 +402,6 @@ final class Locale
 
     /**
      * @param string|null $currency ICU currency.
-     *
-     * @return self
      */
     public function withCurrency(?string $currency): self
     {
@@ -443,8 +421,6 @@ final class Locale
 
     /**
      * @param string|null $extendedLanguage Extended language subtags.
-     *
-     * @return self
      */
     public function withExtendedLanguage(?string $extendedLanguage): self
     {
@@ -454,19 +430,11 @@ final class Locale
         return $new;
     }
 
-    /**
-     * @return string|null
-     */
     public function private(): ?string
     {
         return $this->private;
     }
 
-    /**
-     * @param string|null $private
-     *
-     * @return self
-     */
     public function withPrivate(?string $private): self
     {
         $new = clone $this;
