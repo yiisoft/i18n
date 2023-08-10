@@ -444,9 +444,10 @@ final class Locale implements \Stringable
     }
 
     /**
-     * @return string Regular expression for parsing BCP 47.
-     *
      * @link https://tools.ietf.org/html/bcp47
+     *
+     * @return string Regular expression for parsing BCP 47.
+     * @psalm-return non-empty-string
      */
     private static function getBCP47Regex(): string
     {
