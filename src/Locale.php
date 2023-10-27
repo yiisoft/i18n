@@ -9,7 +9,7 @@ use InvalidArgumentException;
 /**
  * Locale stores locale information created from BCP 47 formatted string.
  *
- * @link https://tools.ietf.org/html/bcp47
+ * @link https://www.rfc-editor.org/info/bcp47
  */
 final class Locale implements \Stringable
 {
@@ -107,7 +107,7 @@ final class Locale implements \Stringable
      *
      * @param string $localeString BCP 47 formatted locale string.
      *
-     * @link https://tools.ietf.org/html/bcp47
+     * @link https://www.rfc-editor.org/info/bcp47
      *
      * @throws InvalidArgumentException
      */
@@ -444,7 +444,7 @@ final class Locale implements \Stringable
     }
 
     /**
-     * @link https://tools.ietf.org/html/bcp47
+     * @link https://www.rfc-editor.org/info/bcp47
      *
      * @return string Regular expression for parsing BCP 47.
      * @psalm-return non-empty-string

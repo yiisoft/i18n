@@ -17,21 +17,20 @@
 
 The package provides common internationalization utilities:
 
-- `Locale` stores locale information created from BCP 47 formatted string.
-  It can parse locale string, modify locale parts,
-  form locale string from parts, and derive fallback locale.
+- `Locale` stores locale information created from [BCP 47](https://www.rfc-editor.org/info/bcp47) formatted string. It
+  can parse locale string, modify locale parts, form locale string from parts, and derive fallback locale.
 - `LocaleProvider` is a stateful service that stores current locale.
 
 ## Requirements
 
-- PHP 7.4 or higher.
+- PHP 8.0 or higher.
 
 ## Installation
 
 The package could be installed with composer:
 
 ```shell
-composer install yiisoft/i18n --prefer-dist
+composer install yiisoft/i18n
 ```
 
 ## General usage
