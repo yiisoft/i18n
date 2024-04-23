@@ -16,7 +16,7 @@ final class Locale implements \Stringable
     /**
      * @var string|null Two-letter ISO-639-2 language code.
      *
-     * @link http://www.loc.gov/standards/iso639-2/
+     * @link https://www.loc.gov/standards/iso639-2/
      */
     private ?string $language = null;
 
@@ -33,7 +33,7 @@ final class Locale implements \Stringable
     /**
      * @var string|null Four-letter ISO 15924 script code.
      *
-     * @link http://www.unicode.org/iso15924/iso15924-codes.html
+     * @link https://www.unicode.org/iso15924/iso15924-codes.html
      */
     private ?string $script = null;
 
@@ -187,7 +187,7 @@ final class Locale implements \Stringable
     /**
      * @return string Four-letter ISO 15924 script code.
      *
-     * @link http://www.unicode.org/iso15924/iso15924-codes.html
+     * @link https://www.unicode.org/iso15924/iso15924-codes.html
      */
     public function script(): ?string
     {
@@ -197,7 +197,7 @@ final class Locale implements \Stringable
     /**
      * @param string|null $script Four-letter ISO 15924 script code.
      *
-     * @link http://www.unicode.org/iso15924/iso15924-codes.html
+     * @link https://www.unicode.org/iso15924/iso15924-codes.html
      */
     public function withScript(?string $script): self
     {
@@ -227,7 +227,7 @@ final class Locale implements \Stringable
     /**
      * @return string|null Two-letter ISO-639-2 language code.
      *
-     * @link http://www.loc.gov/standards/iso639-2/
+     * @link https://www.loc.gov/standards/iso639-2/
      */
     public function language(): ?string
     {
@@ -237,7 +237,7 @@ final class Locale implements \Stringable
     /**
      * @param string|null $language Two-letter ISO-639-2 language code.
      *
-     * @link http://www.loc.gov/standards/iso639-2/
+     * @link https://www.loc.gov/standards/iso639-2/
      */
     public function withLanguage(?string $language): self
     {
