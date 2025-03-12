@@ -11,6 +11,8 @@ on:
       - 'psalm.xml'
 
   push:
+    branches:
+      - master
     paths-ignore:
       - 'docs/**'
       - 'README.md'
@@ -30,4 +32,4 @@ jobs:
       os: >-
         ['ubuntu-latest']
       php: >-
-        ['8.0', '8.1', '8.2']
+        ['8.0', '8.1', '8.2', '8.3']
