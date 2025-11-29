@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\I18n\Locale;
 
-final class LocaleTest extends Testcase
+final class LocaleTest extends TestCase
 {
     public function testInvalidConstructorShouldThrowException(): void
     {

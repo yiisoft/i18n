@@ -2,7 +2,7 @@
 
 ## 1.2.2 under development
 
-- Chg #75: Change PHP constraint in `composer.json` to `8.0 - 8.4` (@vjik)
+- Chg #75, #76: Change PHP constraint in `composer.json` to `8.0 - 8.5` (@vjik)
 
 ## 1.2.1 June 10, 2023
 
