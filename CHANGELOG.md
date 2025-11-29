@@ -1,5 +1,9 @@
 # Yii Internationalization Library Change Log
 
+## 1.2.3 under development
+
+- no changes in this release.
+
 ## 1.2.2 November 29, 2025
 
 - Chg #75, #76: Change PHP constraint in `composer.json` to `8.0 - 8.5` (@vjik)
