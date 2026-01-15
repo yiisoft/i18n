@@ -2,7 +2,7 @@
 
 ## 1.2.3 under development
 
-- no changes in this release.
+- Enh #79: Explicitly import classes in "use" section (@mspirkov)
 
 ## 1.2.2 November 29, 2025
 
