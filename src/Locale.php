@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Yiisoft\I18n;
 
 use InvalidArgumentException;
+use Stringable;
 
 /**
  * Locale stores locale information created from BCP 47 formatted string.
  *
  * @link https://www.rfc-editor.org/info/bcp47
  */
-final class Locale implements \Stringable
+final class Locale implements Stringable
 {
     /**
      * @var string|null Two-letter ISO-639-2 language code.
@@ -182,6 +183,11 @@ final class Locale implements \Stringable
                 }
             }
         }
+    }
+
+    public function __toString(): string
+    {
+        return $this->asString();
     }
 
     /**
@@ -444,35 +450,6 @@ final class Locale implements \Stringable
     }
 
     /**
-     * @link https://www.rfc-editor.org/info/bcp47
-     *
-     * @return string Regular expression for parsing BCP 47.
-     * @psalm-return non-empty-string
-     */
-    private static function getBCP47Regex(): string
-    {
-        $regular = '(?:art-lojban|cel-gaulish|no-bok|no-nyn|zh-guoyu|zh-hakka|zh-min|zh-min-nan|zh-xiang)';
-        $irregular = '(?:en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)';
-        $grandfathered = '(?<grandfathered>' . $irregular . '|' . $regular . ')';
-        $private = '(?<private>x(?:-[A-Za-z0-9]{1,8})+)';
-        $singleton = '[0-9A-WY-Za-wy-z]';
-        $extension = '(?<extension>' . $singleton . '(?:-[A-Za-z0-9]{2,8})+)';
-        $variant = '(?<variant>[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3})';
-        $region = '(?<region>[A-Za-z]{2}|[0-9]{3})';
-        $script = '(?<script>[A-Za-z]{4})';
-        $extendedLanguage = '(?<extendedLanguage>[A-Za-z]{3}(?:-[A-Za-z]{3}){0,2})';
-        $language = '(?<language>[A-Za-z]{4,8})|(?<language>[A-Za-z]{2,3})(?:-' . $extendedLanguage . ')?';
-        $icuKeywords = '(?:@(?<keywords>.*?))?';
-        $languageTag = '(?:' . $language . '(?:-' . $script . ')?' . '(?:-' . $region . ')?' . '(?:-' . $variant . ')*' . '(?:-' . $extension . ')*' . '(?:-' . $private . ')?' . ')';
-        return '/^(?J:' . $grandfathered . '|' . $languageTag . '|' . $private . ')' . $icuKeywords . '$/';
-    }
-
-    public function __toString(): string
-    {
-        return $this->asString();
-    }
-
-    /**
      * @return string Locale string.
      */
     public function asString(): string
@@ -573,5 +550,29 @@ final class Locale implements \Stringable
         }
 
         return $fallback;
+    }
+
+    /**
+     * @link https://www.rfc-editor.org/info/bcp47
+     *
+     * @return string Regular expression for parsing BCP 47.
+     * @psalm-return non-empty-string
+     */
+    private static function getBCP47Regex(): string
+    {
+        $regular = '(?:art-lojban|cel-gaulish|no-bok|no-nyn|zh-guoyu|zh-hakka|zh-min|zh-min-nan|zh-xiang)';
+        $irregular = '(?:en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)';
+        $grandfathered = '(?<grandfathered>' . $irregular . '|' . $regular . ')';
+        $private = '(?<private>x(?:-[A-Za-z0-9]{1,8})+)';
+        $singleton = '[0-9A-WY-Za-wy-z]';
+        $extension = '(?<extension>' . $singleton . '(?:-[A-Za-z0-9]{2,8})+)';
+        $variant = '(?<variant>[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3})';
+        $region = '(?<region>[A-Za-z]{2}|[0-9]{3})';
+        $script = '(?<script>[A-Za-z]{4})';
+        $extendedLanguage = '(?<extendedLanguage>[A-Za-z]{3}(?:-[A-Za-z]{3}){0,2})';
+        $language = '(?<language>[A-Za-z]{4,8})|(?<language>[A-Za-z]{2,3})(?:-' . $extendedLanguage . ')?';
+        $icuKeywords = '(?:@(?<keywords>.*?))?';
+        $languageTag = '(?:' . $language . '(?:-' . $script . ')?' . '(?:-' . $region . ')?' . '(?:-' . $variant . ')*' . '(?:-' . $extension . ')*' . '(?:-' . $private . ')?' . ')';
+        return '/^(?J:' . $grandfathered . '|' . $languageTag . '|' . $private . ')' . $icuKeywords . '$/';
     }
 }

@@ -13,9 +13,8 @@ final class LocaleProvider
     private ?Locale $locale = null;
 
     public function __construct(
-        private Locale $defaultLocale
-    ) {
-    }
+        private Locale $defaultLocale,
+    ) {}
 
     public function get(): Locale
     {
