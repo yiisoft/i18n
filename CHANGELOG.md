@@ -2,6 +2,7 @@
 
 ## 1.2.3 under development
 
+- Chg #96: Replace Psalm with PHPStan (@vjik)
 - Enh #79: Explicitly import classes in "use" section (@mspirkov)
 
 ## 1.2.2 November 29, 2025
