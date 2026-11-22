@@ -1,5 +1,9 @@
 # Yii Internationalization Library Change Log
 
+## 1.2.4 under development
+
+- no changes in this release.
+
 ## 1.2.3 November 22, 2026
 
 - Chg #96: Replace Psalm with PHPStan (@vjik)
