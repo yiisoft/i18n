@@ -555,8 +555,7 @@ final class Locale implements Stringable
     /**
      * @link https://www.rfc-editor.org/info/bcp47
      *
-     * @return string Regular expression for parsing BCP 47.
-     * @psalm-return non-empty-string
+     * @return non-empty-string Regular expression for parsing BCP 47.
      */
     private static function getBCP47Regex(): string
     {
