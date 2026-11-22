@@ -1,6 +1,6 @@
 # Yii Internationalization Library Change Log
 
-## 1.2.3 under development
+## 1.2.3 November 22, 2026
 
 - Chg #96: Replace Psalm with PHPStan (@vjik)
 - Chg #97: Add PHP 8.6 support (@vjik)
