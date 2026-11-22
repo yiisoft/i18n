@@ -21,7 +21,7 @@ The package provides common internationalization utilities:
 
 ## Requirements
 
-- PHP 8.0 - 8.5.
+- PHP 8.0 - 8.6.
 
 ## Installation
 
